@@ -5,7 +5,11 @@
     "version": "3.0.0",
     "owner": "wataru",
     "newArchEnabled": true,
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "orientation": "portrait",
     "icon": "./assets/images/logo-lg.png",
     "userInterfaceStyle": "automatic",
@@ -18,7 +22,8 @@
       "resizeMode": "contain"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wataru.react-native-boilerplate"
     },
     "android": {
       "adaptiveIcon": {

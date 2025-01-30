@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, SafeAreaView, Text, ScrollView, Image } from 'react-native';
+import { View, SafeAreaView, Text, ScrollView, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
@@ -37,25 +37,27 @@ const SignUpSection = ({ setIsLogin }: ISignUpSection) => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+    <SafeAreaView className="flex-1 bg-white">
+      <ScrollView className="flex-grow px-4">
         {/* App Logo */}
-        <View style={styles.logoContainer}>
-          <Image source={require('../../../../assets/images/logo-lg.png')} style={styles.logo} />
+        <View className="items-center mt-10">
+          <Image source={require('../../../../assets/images/logo-lg.png')} className="w-20 h-20" />
         </View>
 
         {/* Heading */}
-        <Text style={styles.heading}>Get Started now</Text>
-        <Text style={styles.subheading}>Create an account or log in to explore about our app</Text>
+        <Text className="text-3xl font-bold text-center mt-6">Get Started now</Text>
+        <Text className="text-gray-500 text-center mt-2">
+          Create an account or log in to explore about our app
+        </Text>
 
         {/* Auth Form */}
-        <View style={styles.authFormContainer}>
-          <View className="p-4">
+        <View className="mt-8">
+          <View className="px-4">
             <Controller
               control={control}
               name="firstName"
               render={({ field }) => (
-                <View>
+                <View className="mb-4">
                   <InputField
                     label="First name"
                     type="text"
@@ -70,7 +72,7 @@ const SignUpSection = ({ setIsLogin }: ISignUpSection) => {
               control={control}
               name="lastName"
               render={({ field }) => (
-                <View>
+                <View className="mb-4">
                   <InputField
                     label="Last name"
                     type="text"
@@ -85,7 +87,7 @@ const SignUpSection = ({ setIsLogin }: ISignUpSection) => {
               control={control}
               name="userName"
               render={({ field }) => (
-                <View>
+                <View className="mb-4">
                   <InputField
                     label="User name"
                     type="text"
@@ -100,7 +102,7 @@ const SignUpSection = ({ setIsLogin }: ISignUpSection) => {
               control={control}
               name="email"
               render={({ field }) => (
-                <View>
+                <View className="mb-4">
                   <InputField
                     label="Email"
                     type="email"
@@ -115,7 +117,7 @@ const SignUpSection = ({ setIsLogin }: ISignUpSection) => {
               control={control}
               name="password"
               render={({ field }) => (
-                <View>
+                <View className="mb-4">
                   <InputField
                     label="Password"
                     type="password"
@@ -138,44 +140,5 @@ const SignUpSection = ({ setIsLogin }: ISignUpSection) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  scrollView: {
-    flexGrow: 1,
-    paddingHorizontal: 16,
-  },
-  logoContainer: {
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  logo: {
-    width: 80,
-    height: 80,
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 24,
-  },
-  subheading: {
-    color: 'gray',
-    textAlign: 'center',
-    marginTop: 8,
-  },
-  authFormContainer: {
-    marginTop: 32,
-  },
-  container: {
-    padding: 16,
-  },
-  inputContainer: {
-    marginBottom: 16,
-  },
-});
 
 export default SignUpSection;

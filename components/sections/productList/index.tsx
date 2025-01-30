@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, TextInput } from 'react-native';
-import { colors } from '@/theme';
+import { View, TextInput, FlatList } from 'react-native';
 import { IProduct } from '@/utils/helper';
 import Button from '@/components/common/Button';
 import ProductCard from '@/components/sections/productCard';
@@ -43,17 +42,20 @@ const ProductList: React.FC<ProductListProps> = ({ products, productsPerPage = 1
   const renderProduct = ({ item }: { item: IProduct }) => <ProductCard product={item} />;
 
   return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
+    <View className="flex-1 bg-lightGrayPurple p-4">
+      {/* Search Container */}
+      <View className="flex-row mb-4">
         <TextInput
-          style={styles.searchInput}
+          style={{ flex: 1 }}
+          className="border border-gray-300 rounded-lg p-2 mr-2"
           placeholder="Search by name"
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
       </View>
 
-      <View style={styles.filterContainer}>
+      {/* Sort Filter Buttons */}
+      <View className="flex-row justify-between mb-4">
         <Button
           buttonText="Low to High"
           onPress={() => setSortOrder('asc')}
@@ -66,49 +68,19 @@ const ProductList: React.FC<ProductListProps> = ({ products, productsPerPage = 1
         />
       </View>
 
+      {/* Product List */}
       <FlatList
         data={productsData}
         renderItem={renderProduct}
         keyExtractor={item => item.id.toString()}
         onEndReached={loadMoreProducts}
         onEndReachedThreshold={0.5}
-        contentContainerStyle={styles.productList}
+        contentContainerStyle={{ paddingBottom: 4 }}
         numColumns={2}
-        columnWrapperStyle={styles.productRow}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.lightGrayPurple,
-    padding: 16,
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    marginBottom: 16,
-  },
-  searchInput: {
-    borderWidth: 1,
-    borderColor: colors.gray,
-    borderRadius: 8,
-    padding: 8,
-    flex: 1,
-    marginRight: 8,
-  },
-  filterContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  productList: {
-    paddingBottom: 16,
-  },
-  productRow: {
-    justifyContent: 'space-between',
-  },
-});
 
 export default ProductList;

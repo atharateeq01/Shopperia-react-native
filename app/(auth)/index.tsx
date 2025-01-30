@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  Text,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
+import { View, SafeAreaView, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -38,25 +30,27 @@ const LoginSection = () => {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
+    <SafeAreaView className="flex-1 bg-white">
+      <ScrollView className="flex-grow px-4">
         {/* App Logo */}
-        <View style={styles.logoContainer}>
-          <Image source={require('../../assets/images/logo-lg.png')} style={styles.logo} />
+        <View className="items-center mt-10">
+          <Image source={require('../../assets/images/logo-lg.png')} className="w-20 h-20" />
         </View>
 
         {/* Heading */}
-        <Text style={styles.heading}>Get Started now</Text>
-        <Text style={styles.subheading}>Create an account or log in to explore about our app</Text>
+        <Text className="text-3xl font-bold text-center mt-6">Get Started now</Text>
+        <Text className="text-gray-500 text-center mt-2">
+          Create an account or log in to explore about our app
+        </Text>
 
         {/* Auth Form */}
-        <View style={styles.authFormContainer}>
-          <View style={styles.container}>
+        <View className="mt-8">
+          <View className="px-4">
             <Controller
               control={control}
               name="email"
               render={({ field }) => (
-                <View style={styles.inputContainer}>
+                <View className="mb-4">
                   <InputField
                     label="Email"
                     type="text"
@@ -71,7 +65,7 @@ const LoginSection = () => {
               control={control}
               name="password"
               render={({ field }) => (
-                <View style={styles.inputContainer}>
+                <View className="mb-4">
                   <InputField
                     label="Password"
                     type="password"
@@ -83,9 +77,9 @@ const LoginSection = () => {
               )}
             />
 
-            <View style={styles.haveAccount}>
-              <TouchableOpacity onPress={() => router.push('/(auth)/authScreen/signUpSection')}>
-                <Text style={styles.signupText}>Already have an account?</Text>
+            <View className="flex-1 items-end">
+              <TouchableOpacity onPress={() => router.push('/(auth)/adduthScreen/signUpSection')}>
+                <Text className="text-blue-600 text-base mb-4">Already have an account?</Text>
               </TouchableOpacity>
             </View>
 
@@ -102,54 +96,5 @@ const LoginSection = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  scrollView: {
-    flexGrow: 1,
-    paddingHorizontal: 16,
-  },
-  logoContainer: {
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  logo: {
-    width: 80,
-    height: 80,
-  },
-  heading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginTop: 24,
-  },
-  haveAccount: {
-    flex: 1,
-    alignItems: 'flex-end',
-  },
-  subheading: {
-    color: 'gray',
-    textAlign: 'center',
-    marginTop: 8,
-  },
-  authFormContainer: {
-    marginTop: 32,
-  },
-  container: {
-    padding: 16,
-  },
-  inputContainer: {
-    marginBottom: 16,
-  },
-  signupText: {
-    textAlign: 'center',
-    color: '#007BFF', // Link color
-    fontSize: 16,
-    marginBottom: 16, // Space before button
-  },
-});
 
 export default LoginSection;

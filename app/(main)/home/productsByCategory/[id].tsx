@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, ActivityIndicator } from 'react-native';
+import { View, Text, Image, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProductsByCategoryId } from '@/api';
@@ -22,11 +22,9 @@ const ProductsByCategory = () => {
     enabled: !!id,
   });
 
-  // Placeholder image for no products
-
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
+      <View className="flex-1 justify-center items-center">
         <ActivityIndicator size="large" color={colors.blue} />
         <Text>Loading...</Text>
       </View>
@@ -35,37 +33,26 @@ const ProductsByCategory = () => {
 
   if (error) {
     return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Failed to load products. Please try again.</Text>
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-lg text-red-600">Failed to load products. Please try again.</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 p-4 bg-white">
       {products && products.length === 0 ? (
-        <View style={styles.noProductsContainer}>
-          <Image source={placeholderImage} style={styles.noProductsImage} />
-          <Text style={styles.noProductsText}>No products for this category</Text>
+        <View className="flex-1 justify-center items-center">
+          <Image source={placeholderImage} className="w-36 h-36 mb-4" />
+          <Text className="text-lg text-gray-600">No products for this category</Text>
         </View>
       ) : (
-        <View style={styles.productContainer}>
+        <View className="flex-1">
           <ProductList products={products ?? []} />
         </View>
       )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: 'white' },
-  productContainer: { flex: 1 },
-  loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  errorContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  errorText: { fontSize: 18, color: colors.red },
-  noProductsContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  noProductsImage: { width: 150, height: 150, marginBottom: 16 },
-  noProductsText: { fontSize: 18, color: 'gray' },
-});
 
 export default ProductsByCategory;

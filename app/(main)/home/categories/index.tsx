@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  FlatList,
-  TouchableOpacity,
-  Image,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ICategory } from '@/utils/helper';
 import { useQuery } from '@tanstack/react-query';
@@ -16,6 +8,7 @@ import { colors } from '@/theme';
 
 const Categories = () => {
   const router = useRouter();
+
   // Fetch categories
   const {
     data: categoryData,
@@ -31,24 +24,24 @@ const Categories = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1 bg-white px-4 py-4">
       {categoriesLoading ? (
         <ActivityIndicator size="large" color={colors.lightDarkPurple} />
       ) : categoriesError ? (
-        <Text>Failed to load categories</Text>
+        <Text className="text-center text-red-500">Failed to load categories</Text>
       ) : (
         <FlatList
           data={categoryData}
           numColumns={2}
           keyExtractor={(item: ICategory) => item.id}
-          contentContainerStyle={styles.listContainer}
+          className="pb-5"
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={styles.categoryCard}
+              className="w-48 m-2 p-4 bg-gray-100 rounded-lg items-center"
               onPress={() => handleCategoryPress(item.id)}>
-              <Image source={{ uri: item.image }} style={styles.categoryImage} />
-              <Text style={styles.categoryName}>{item.name}</Text>
-              <Text style={styles.categoryDescription}>{item.description}</Text>
+              <Image source={{ uri: item.image }} className="w-40 h-28 rounded-xl" />
+              <Text className="font-semibold text-base mt-3">{item.name}</Text>
+              <Text className="text-xs text-gray-500 mt-2 text-center">{item.description}</Text>
             </TouchableOpacity>
           )}
         />
@@ -56,21 +49,5 @@ const Categories = () => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: 'white' },
-  listContainer: { paddingBottom: 20 },
-  categoryCard: {
-    width: '48%',
-    margin: '1%',
-    padding: 10,
-    borderRadius: 8,
-    backgroundColor: '#f8f8f8',
-    alignItems: 'center',
-  },
-  categoryImage: { width: 100, height: 100, borderRadius: 50 },
-  categoryName: { fontSize: 16, fontWeight: 'bold', marginTop: 8 },
-  categoryDescription: { fontSize: 12, color: 'gray', marginTop: 4, textAlign: 'center' },
-});
 
 export default Categories;

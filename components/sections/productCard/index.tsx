@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { IProduct } from '@/utils/helper';
 import { colors } from '@/theme';
 import { router } from 'expo-router';
@@ -16,106 +16,39 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
     <TouchableOpacity
       onPress={() => router.push(`(main)/home/product-details/${product.id}`)}
-      style={styles.card}>
-      {/* <View style={styles.card}> */}
+      className="bg-white rounded-lg p-4 items-center w-1/2 mb-4 relative">
       {/* Discount Badge */}
       {product.discount && (
-        <View style={styles.discountBadge}>
-          <Text style={styles.discountText}>{product.discount}% OFF</Text>
+        <View className="absolute top-2 left-2 bg-red-500 py-1 px-2 rounded-md z-10">
+          <Text className="text-white text-xs font-bold">{product.discount}% OFF</Text>
         </View>
       )}
 
       {/* Product Image */}
-      <Image source={{ uri: product.image }} style={styles.image} />
+      <Image source={{ uri: product.image }} className="w-full h-32 rounded-lg mb-4" />
 
       {/* Product Name */}
-      <Text style={styles.name}>{product.name}</Text>
+      <Text className="text-lg font-bold text-center mb-2">{product.name}</Text>
 
       {/* Product Description */}
-      <Text style={styles.description}>{product.description}</Text>
+      <Text className="text-sm text-gray-500 text-center mb-2">{product.description}</Text>
 
       {/* Product Price */}
-      <Text style={styles.price}>${product.price}</Text>
+      <Text className="text-sm font-bold text-black mb-4">${product.price}</Text>
 
       {/* Add to Cart / Out of Stock */}
       {product.quantity > 0 ? (
-        <TouchableOpacity style={styles.addToCartButton} onPress={onAddToCart}>
-          <Text style={styles.addToCartText}>Add to Cart</Text>
+        <TouchableOpacity
+          style={{ backgroundColor: colors.blue }}
+          className="py-2 px-4 rounded-md"
+          onPress={onAddToCart}>
+          <Text className="text-white text-sm font-bold">Add to Cart</Text>
         </TouchableOpacity>
       ) : (
-        <Text style={styles.outOfStock}>Out of Stock</Text>
+        <Text className="text-red-500 text-sm font-bold">Out of Stock</Text>
       )}
-      {/* </View> */}
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: colors.white,
-    borderRadius: 8,
-    padding: 10,
-    alignItems: 'center',
-    width: '50%',
-    marginBottom: 15,
-    position: 'relative',
-  },
-  discountBadge: {
-    position: 'absolute',
-    top: 8,
-    left: 8,
-    backgroundColor: colors.red,
-    paddingVertical: 3,
-    paddingHorizontal: 6,
-    borderRadius: 4,
-    zIndex: 1,
-  },
-  discountText: {
-    color: colors.white,
-    fontSize: 12,
-    fontWeight: 'bold',
-  },
-  image: {
-    width: '100%',
-    height: 120,
-    borderRadius: 8,
-    marginBottom: 10,
-    objectFit: 'cover',
-  },
-  name: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 5,
-  },
-  description: {
-    fontSize: 14,
-    color: colors.gray,
-    textAlign: 'center',
-    marginBottom: 5,
-  },
-  price: {
-    fontSize: 14,
-    color: colors.black,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  addToCartButton: {
-    backgroundColor: colors.blue,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 6,
-  },
-  addToCartText: {
-    color: colors.white,
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  outOfStock: {
-    fontSize: 14,
-    color: colors.red,
-    fontWeight: 'bold',
-  },
-});
 
 export default ProductCard;

@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  Image,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProductById, fetchCategoryById } from '@/api';
@@ -38,7 +30,7 @@ const ProductDetails = () => {
 
   if (isProductLoading || isCategoryLoading) {
     return (
-      <View style={styles.loadingContainer}>
+      <View className="flex-1 justify-center items-center bg-white">
         <ActivityIndicator size="large" color={colors.blue} />
         <Text>Loading...</Text>
       </View>
@@ -51,134 +43,45 @@ const ProductDetails = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView className="p-5 bg-white">
       {/* Product Name */}
-      <Text style={styles.productName}>{product.name}</Text>
+      <Text className="text-2xl font-bold text-black mb-2">{product.name}</Text>
 
       {/* Product Description */}
-      <Text style={styles.productDescription}>{product.description}</Text>
+      <Text className="text-lg text-gray-600 mb-5">{product.description}</Text>
 
       {/* Product Image */}
-      <Image source={{ uri: product.image }} style={styles.productImage} />
+      <Image source={{ uri: product.image }} className="w-full h-72 object-cover mb-5" />
 
       {/* Category Info */}
       {category && (
-        <View style={styles.categoryBlock}>
-          <View style={styles.categoryContainer}>
-            <Image source={{ uri: category.image }} style={styles.categoryImage} />
-            <Text style={styles.categoryName}>{category.name}</Text>
+        <View className="flex-col mb-5">
+          <View className="flex-row items-center">
+            <Image source={{ uri: category.image }} className="w-12 h-12 rounded-full mr-3" />
+            <Text className="text-xl font-bold text-black">{category.name}</Text>
           </View>
-          <Text style={styles.categoryDescription}>{category.description}</Text>
+          <Text className="text-lg text-gray-600 ml-12">{category.description}</Text>
         </View>
       )}
 
       {/* Product Price */}
-      <View style={styles.priceContainer}>
-        <Text style={styles.productPrice}>Pre unit: ${product.price}</Text>
-        {product.discount && <Text style={styles.discountText}>{product.discount}% OFF</Text>}
+      <View className="flex-row items-center mb-5">
+        <Text className="text-2xl font-bold text-blue-500 mr-2">Pre unit: ${product.price}</Text>
+        {product.discount && (
+          <Text className="text-lg text-red-500 font-semibold">{product.discount}% OFF</Text>
+        )}
       </View>
 
       {/* Add to Cart / Out of Stock */}
       {product.quantity > 0 ? (
-        <TouchableOpacity style={styles.addToCartButton}>
-          <Text style={styles.addToCartText}>Add to Cart</Text>
+        <TouchableOpacity className="bg-blue-500 p-4 rounded-lg items-center">
+          <Text className="text-white text-lg font-bold">Add to Cart</Text>
         </TouchableOpacity>
       ) : (
-        <Text style={styles.outOfStock}>Out of Stock</Text>
+        <Text className="text-red-500 text-lg font-bold text-center">Out of Stock</Text>
       )}
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    backgroundColor: colors.white,
-    padding: 20,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.white,
-  },
-  productName: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: colors.black,
-    marginBottom: 10,
-  },
-  productDescription: {
-    fontSize: 16,
-    color: colors.gray,
-    lineHeight: 24,
-    marginBottom: 20,
-  },
-  productImage: {
-    width: '100%',
-    height: 300,
-    resizeMode: 'cover',
-    marginBottom: 20,
-  },
-  categoryContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  categoryBlock: {
-    flexDirection: 'column',
-    marginBottom: 20,
-  },
-  categoryImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
-  },
-  categoryName: {
-    fontSize: 18,
-    color: colors.black,
-    fontWeight: 'bold',
-  },
-  categoryDescription: {
-    fontSize: 16,
-    marginLeft: 50,
-    color: colors.gray,
-    lineHeight: 24,
-    marginBottom: 20,
-  },
-  priceContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  productPrice: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: colors.blue,
-    marginRight: 10,
-  },
-  discountText: {
-    fontSize: 16,
-    color: colors.red,
-    fontWeight: 'bold',
-  },
-  addToCartButton: {
-    backgroundColor: colors.blue,
-    paddingVertical: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  addToCartText: {
-    color: colors.white,
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  outOfStock: {
-    fontSize: 18,
-    color: colors.red,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
 
 export default ProductDetails;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ActivityIndicator, Text } from 'react-native';
+import { View, ActivityIndicator, Text } from 'react-native';
 import ProductList from '@/components/sections/productList';
 import { fetchAllProducts } from '@/api';
 import { useQuery } from '@tanstack/react-query';
@@ -19,7 +19,7 @@ const Products = () => {
 
   if (isProductLoading) {
     return (
-      <View style={styles.loadingContainer}>
+      <View className="flex-1 justify-center items-center bg-white">
         <ActivityIndicator size="large" color={colors.blue} />
         <Text>Loading...</Text>
       </View>
@@ -32,22 +32,10 @@ const Products = () => {
   }
 
   return (
-    <View style={styles.container}>
+    <View className="flex-1">
       <ProductList products={productsData ?? []} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: colors.white,
-  },
-});
 
 export default Products;
