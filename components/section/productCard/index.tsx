@@ -8,14 +8,14 @@ interface ProductCardProps {
   product: IProduct;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const onAddToCart = () => {
-    console.log('product', product.id, ' ', product.name);
+    console.log('product', product._id, ' ', product.productName);
   };
 
   return (
     <TouchableOpacity
-      onPress={() => router.push(`(main)/home/product-details/${product.id}`)}
+      onPress={() => router.push(`(main)/home/product-details/${product._id}`)}
       className="bg-white rounded-lg p-4 items-center w-1/2 mb-4 relative">
       {/* Discount Badge */}
       {product.discount && (
@@ -25,13 +25,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       )}
 
       {/* Product Image */}
-      <Image source={{ uri: product.image }} className="w-full h-32 rounded-lg mb-4" />
+      <Image source={{ uri: product.productImage }} className="w-full h-32 rounded-lg mb-4" />
 
       {/* Product Name */}
-      <Text className="text-lg font-bold text-center mb-2">{product.name}</Text>
+      <Text className="text-lg font-bold text-center mb-2">{product.productName}</Text>
 
       {/* Product Description */}
-      <Text className="text-sm text-gray-500 text-center mb-2">{product.description}</Text>
+      <Text className="text-sm text-gray-500 text-center mb-2">{product.productDescription}</Text>
 
       {/* Product Price */}
       <Text className="text-sm font-bold text-black mb-4">${product.price}</Text>
@@ -50,5 +50,3 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     </TouchableOpacity>
   );
 };
-
-export default ProductCard;

@@ -5,7 +5,7 @@ const { width } = Dimensions.get('window');
 const ITEM_WIDTH = width * 0.95; // Adjust item width
 const SIDE_ITEM_WIDTH = (width - ITEM_WIDTH) / 2; // Ensure side items are visible
 
-const ShoppingBanners = () => {
+export const ShoppingBanners = () => {
   const [currentIndex, setCurrentIndex] = useState(0); // Start from the first item
   const flatListRef = useRef<FlatList>(null);
 
@@ -62,7 +62,7 @@ const ShoppingBanners = () => {
         }}
         renderItem={({ item }) => (
           <View
-            className="flex items-center justify-center bg-white rounded-lg shadow-md p-4"
+            className="flex items-center justify-center rounded-lg shadow-md m-2"
             style={{
               width: ITEM_WIDTH,
               marginHorizontal: 10,
@@ -105,5 +105,3 @@ const ShoppingBanners = () => {
     </View>
   );
 };
-
-export default ShoppingBanners;

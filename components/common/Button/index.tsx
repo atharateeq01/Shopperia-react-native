@@ -12,7 +12,7 @@ interface ButtonProps {
   isLoading?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   onPress,
   buttonText,
   isDisabled = false,
@@ -52,5 +52,3 @@ const Button: React.FC<ButtonProps> = ({
     </TouchableOpacity>
   );
 };
-
-export default Button;
