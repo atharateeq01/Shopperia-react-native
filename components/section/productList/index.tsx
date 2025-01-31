@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, TextInput, FlatList } from 'react-native';
 import { IProduct } from '@/utils/helper';
-import Button from '@/components/common/Button';
-import ProductCard from '@/components/sections/productCard';
+import { Button } from '@/components/common/Button';
+import { ProductCard } from '@/components/section/productCard';
 
 interface ProductListProps {
   products: IProduct[];
   productsPerPage?: number;
 }
 
-const ProductList: React.FC<ProductListProps> = ({ products, productsPerPage = 10 }) => {
+export const ProductList: React.FC<ProductListProps> = ({ products, productsPerPage = 10 }) => {
   const [productsData, setProductsData] = useState<IProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
@@ -23,7 +23,7 @@ const ProductList: React.FC<ProductListProps> = ({ products, productsPerPage = 1
   const loadFilteredProducts = () => {
     let filteredProducts = products
       .slice(0, page * productsPerPage)
-      .filter(product => product.name.toLowerCase().includes(searchQuery.toLowerCase()));
+      .filter(product => product.productName.toLowerCase().includes(searchQuery.toLowerCase()));
 
     if (sortOrder) {
       filteredProducts.sort((a, b) =>
@@ -67,12 +67,11 @@ const ProductList: React.FC<ProductListProps> = ({ products, productsPerPage = 1
           variant={sortOrder === 'desc' ? 'primary' : 'clear'}
         />
       </View>
-
       {/* Product List */}
       <FlatList
         data={productsData}
         renderItem={renderProduct}
-        keyExtractor={item => item.id.toString()}
+        keyExtractor={item => item._id}
         onEndReached={loadMoreProducts}
         onEndReachedThreshold={0.5}
         contentContainerStyle={{ paddingBottom: 4 }}
@@ -82,5 +81,3 @@ const ProductList: React.FC<ProductListProps> = ({ products, productsPerPage = 1
     </View>
   );
 };
-
-export default ProductList;

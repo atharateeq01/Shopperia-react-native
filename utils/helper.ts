@@ -64,10 +64,10 @@ export const colors = {
 };
 
 export interface IProduct {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
+  _id: string;
+  productName: string;
+  productDescription: string;
+  productImage: string;
   price: number;
   quantity: number;
   categoryId: string;
@@ -75,8 +75,8 @@ export interface IProduct {
 }
 
 export interface ICategory {
-  id: string;
-  name: string;
-  description: string;
-  image: string;
+  _id: string;
+  categoryName: string;
+  categoryDescription: string;
+  categoryImage: string;
 }

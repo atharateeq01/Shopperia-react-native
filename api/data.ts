@@ -1,24 +1,52 @@
-import { categories, products } from '@/utils/data';
+import apiClient from './middleware';
 
-// Simulate API delay
-const simulateApiCall = <T>(data: T, delay = 500): Promise<T> =>
-  new Promise(resolve => setTimeout(() => resolve(data), delay));
+const API_URL = 'http://localhost:5000/api';
 
-export const fetchAllProducts = async () => simulateApiCall(products);
+export const fetchAllProducts = async (): Promise<any> => {
+  try {
+    const response = await apiClient.get(`${API_URL}/product`);
+    return response.data.data;
+  } catch (error: any) {
+    console.log(error);
 
-export const fetchAllCategories = async () => simulateApiCall(categories);
-
-export const fetchCategoryById = async (id: string) => {
-  const category = categories.find(cat => cat.id === id);
-  return simulateApiCall(category || null);
+    throw error.response?.data || { message: 'An error occurred while fetching the user.' };
+  }
 };
 
-export const fetchProductById = async (id: string) => {
-  const product = products.find(prod => prod.id === id);
-  return simulateApiCall(product || null);
+export const fetchAllCategories = async () => {
+  try {
+    const response = await apiClient.get(`${API_URL}/category`);
+    return response.data.data;
+  } catch (error: any) {
+    console.log(error);
+
+    throw error.response?.data || { message: 'An error occurred while fetching the user.' };
+  }
+};
+
+export const fetchCategoryById = async (id: string) => {
+  try {
+    const response = await apiClient.get(`${API_URL}/category/${id}`);
+    return response.data.data;
+  } catch (error: any) {
+    throw error.response?.data || { message: 'An error occurred while fetching the user.' };
+  }
+};
+
+export const fetchProductById = async (productId: string) => {
+  try {
+    const response = await apiClient.get(`${API_URL}/product/${productId}`);
+    return response.data.data;
+  } catch (error: any) {
+    throw error.response?.data || { message: 'An error occurred while fetching the user.' };
+  }
 };
 
 export const fetchProductsByCategoryId = async (categoryId: string) => {
-  const filteredProducts = products.filter(prod => prod.categoryId === categoryId);
-  return simulateApiCall(filteredProducts);
+  try {
+    const response = await apiClient.get(`${API_URL}/product/category/${categoryId}`);
+    return response.data.data;
+  } catch (error: any) {
+    throw error.response?.data || { message: 'An error occurred while fetching the user.' };
+  }
 };

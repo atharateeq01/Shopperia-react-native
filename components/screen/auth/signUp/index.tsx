@@ -4,17 +4,17 @@ import { Ionicons } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 
-import Button from '@/components/common/Button';
+import { Button } from '@/components/common/Button';
 import { InputField } from '@/components/common/InputField';
-import SignUpSchema from '@/app/(auth)/authScreen/signUpSection/validation';
+import SignUpSchema from '@/components/screen/auth/signUp/validation';
 import { IUserData } from '@/utils/helper';
 import { showToast } from '@/utils/toast';
 
-interface ISignUpSection {
+interface ISignUp {
   setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SignUpSection = ({ setIsLogin }: ISignUpSection) => {
+export const SignUp = ({ setIsLogin }: ISignUp) => {
   const {
     control,
     handleSubmit,
@@ -41,7 +41,7 @@ const SignUpSection = ({ setIsLogin }: ISignUpSection) => {
       <ScrollView className="flex-grow px-4">
         {/* App Logo */}
         <View className="items-center mt-10">
-          <Image source={require('../../../../assets/images/logo-lg.png')} className="w-20 h-20" />
+          <Image source={require('@/assets/images/logo-lg.png')} className="w-20 h-20" />
         </View>
 
         {/* Heading */}
@@ -140,5 +140,3 @@ const SignUpSection = ({ setIsLogin }: ISignUpSection) => {
     </SafeAreaView>
   );
 };
-
-export default SignUpSection;

@@ -45,7 +45,7 @@ const AuthLayout = () => {
         }}
       />
       <Stack.Screen
-        name="authScreen/signUpSection/index"
+        name="signUp/index"
         options={{
           headerTitle: 'Sign up',
         }}
