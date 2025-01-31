@@ -8,6 +8,8 @@ import { ProductCard } from '@/components/section/productCard';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAllCategories, fetchAllProducts } from '@/api';
 import { ICategory } from '@/utils/helper';
+import { Button } from '@/components/common/Button';
+import { Ionicons } from '@expo/vector-icons';
 
 export const Home = () => {
   const router = useRouter();
@@ -32,13 +34,23 @@ export const Home = () => {
     queryKey: ['products'],
     queryFn: fetchAllProducts,
   });
-
   return (
     <View className="flex-1 p-4 bg-white">
       {/* Greeting */}
-      <Text className="text-2xl font-bold text-black">Hello {user?.firstName} 👋</Text>
-      <Text className="text-lg text-gray-500 mb-5">Let's start shopping!</Text>
+      <View className="flex-row items-center justify-between px-4 py-2">
+        <View className="flex-1 justify-start">
+          <Text className="text-2xl font-bold text-black">Hello {user?.firstName} 👋</Text>
+          <Text className="text-lg text-gray-500 mb-4">Let's start shopping!</Text>
+        </View>
 
+        <View>
+          <Button
+            onPress={() => router.push('(main)/home/cart')}
+            buttonText="0"
+            iconLeft={<Ionicons name="cart" color={'#fff'} size={20} />}
+          />
+        </View>
+      </View>
       {/* Shopping Banners */}
       <ShoppingBanners />
 

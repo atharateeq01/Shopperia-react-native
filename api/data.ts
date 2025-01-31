@@ -7,8 +7,6 @@ export const fetchAllProducts = async (): Promise<any> => {
     const response = await apiClient.get(`${API_URL}/product`);
     return response.data.data;
   } catch (error: any) {
-    console.log(error);
-
     throw error.response?.data || { message: 'An error occurred while fetching the user.' };
   }
 };
@@ -18,8 +16,6 @@ export const fetchAllCategories = async () => {
     const response = await apiClient.get(`${API_URL}/category`);
     return response.data.data;
   } catch (error: any) {
-    console.log(error);
-
     throw error.response?.data || { message: 'An error occurred while fetching the user.' };
   }
 };

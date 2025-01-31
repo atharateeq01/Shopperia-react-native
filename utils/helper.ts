@@ -63,6 +63,13 @@ export const colors = {
   white: '#FFFFFF',
 };
 
+export interface ICategory {
+  _id: string;
+  categoryName: string;
+  categoryDescription: string;
+  categoryImage: string;
+}
+
 export interface IProduct {
   _id: string;
   productName: string;
@@ -70,13 +77,17 @@ export interface IProduct {
   productImage: string;
   price: number;
   quantity: number;
-  categoryId: string;
+  categoryId: ICategory;
   discount?: number;
 }
 
-export interface ICategory {
+export interface ICreateCart {
+  productId: string;
+  itemAmount: number;
+}
+
+export interface ICart {
   _id: string;
-  categoryName: string;
-  categoryDescription: string;
-  categoryImage: string;
+  productId: IProduct;
+  itemAmounts: string;
 }

@@ -13,6 +13,7 @@ export default function HomeStackLayout() {
       <Stack.Screen name="product-details/[id]" options={{ title: 'Product Details' }} />
       <Stack.Screen name="categories/index" options={{ title: 'Categories' }} />
       <Stack.Screen name="productsByCategory/[id]" options={{ title: 'Products' }} />
+      <Stack.Screen name="cart/index" options={{ title: 'Cart' }} />
     </Stack>
   );
 }

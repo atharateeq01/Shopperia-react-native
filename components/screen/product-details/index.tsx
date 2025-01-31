@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
-import { fetchProductById, fetchCategoryById } from '@/api';
-import { IProduct, ICategory } from '@/utils/helper';
+import { fetchProductById } from '@/api';
+import { IProduct } from '@/utils/helper';
 import { colors } from '@/theme';
+import { AddToCartModal } from '@/components/section/addToCartModal';
 
 export const ProductDetails = () => {
   const router = useRouter();
   const { id } = useLocalSearchParams<{ id: string }>();
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   // Fetch product data
   const {
@@ -21,14 +23,7 @@ export const ProductDetails = () => {
     enabled: !!id, // Only fetch if id exists
   });
 
-  // Fetch category data once product is available
-  const { data: category, isLoading: isCategoryLoading } = useQuery<ICategory | null>({
-    queryKey: ['category', product?.categoryId],
-    queryFn: () => fetchCategoryById(product?.categoryId as string),
-    enabled: !!product?.categoryId, // Only fetch if product exists
-  });
-
-  if (isProductLoading || isCategoryLoading) {
+  if (isProductLoading) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
         <ActivityIndicator size="large" color={colors.blue} />
@@ -54,18 +49,20 @@ export const ProductDetails = () => {
       <Image source={{ uri: product.productImage }} className="w-full h-72 object-cover mb-5" />
 
       {/* Category Info */}
-      {category && (
-        <View className="flex-col mb-5">
-          <View className="flex-row items-center">
-            <Image
-              source={{ uri: category.categoryImage }}
-              className="w-12 h-12 rounded-full mr-3"
-            />
-            <Text className="text-xl font-bold text-black">{category.categoryName}</Text>
-          </View>
-          <Text className="text-lg text-gray-600 ml-12">{category.categoryDescription}</Text>
+      <View className="flex-col mb-5">
+        <View className="flex-row items-center">
+          <Image
+            source={{ uri: product.categoryId.categoryImage }}
+            className="w-12 h-12 rounded-full mr-3"
+          />
+          <Text className="text-xl font-bold text-black">{product.categoryId.categoryName}</Text>
         </View>
-      )}
+        {product.categoryId.categoryDescription && (
+          <Text className="text-lg text-gray-600 ml-12">
+            {product.categoryId.categoryDescription}
+          </Text>
+        )}
+      </View>
 
       {/* Product Price */}
       <View className="flex-row items-center mb-5">
@@ -77,12 +74,20 @@ export const ProductDetails = () => {
 
       {/* Add to Cart / Out of Stock */}
       {product.quantity > 0 ? (
-        <TouchableOpacity className="bg-blue-500 p-4 rounded-lg items-center">
+        <TouchableOpacity
+          className="bg-blue-500 p-4 rounded-lg items-center"
+          onPress={() => setIsModalVisible(true)}>
           <Text className="text-white text-lg font-bold">Add to Cart</Text>
         </TouchableOpacity>
       ) : (
         <Text className="text-red-500 text-lg font-bold text-center">Out of Stock</Text>
       )}
+      {/* Quantity Modal */}
+      <AddToCartModal
+        product={product}
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+      />
     </ScrollView>
   );
 };
