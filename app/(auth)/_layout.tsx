@@ -39,7 +39,7 @@ const AuthLayout = () => {
   return (
     <Stack>
       <Stack.Screen
-        name="index"
+        name="login/index"
         options={{
           headerTitle: 'Login',
         }}
