@@ -16,7 +16,7 @@ apiClient.interceptors.request.use(
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       } else {
-        router.push('/authScreen');
+        router.push('/');
       }
     } catch (error) {
       console.error('Error retrieving token:', error);

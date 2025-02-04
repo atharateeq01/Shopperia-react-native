@@ -1,20 +1,19 @@
 import React from 'react';
-import { View, SafeAreaView, Text, ScrollView, Image } from 'react-native';
+import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
+import { View, SafeAreaView, Text, ScrollView, Image } from 'react-native';
 
+import { createUser } from '@/api';
+import { showToast } from '@/utils/toast';
+import { IUserData } from '@/utils/helper';
+import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/components/common/Button';
 import { InputField } from '@/components/common/InputField';
 import SignUpSchema from '@/components/screen/auth/signUp/validation';
-import { IUserData } from '@/utils/helper';
-import { showToast } from '@/utils/toast';
 
-interface ISignUp {
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const SignUp = ({ setIsLogin }: ISignUp) => {
+export const SignUp = () => {
   const {
     control,
     handleSubmit,
@@ -23,17 +22,21 @@ export const SignUp = ({ setIsLogin }: ISignUp) => {
     resolver: yupResolver(SignUpSchema),
   });
 
-  const onSubmit = async (data: IUserData) => {
-    try {
-      // const response = await createUser(data)
-      const response = { success: true, message: 'ASSA' };
-      if (response.success) {
-        showToast('success', 'Congrats', response.message);
-        setIsLogin(true);
+  const { mutate } = useMutation({
+    mutationFn: createUser,
+    onSuccess: data => {
+      if (data.success) {
+        showToast('success', 'Horray', data.message);
+        router.push('/(auth)/login');
       }
-    } catch (error: any) {
-      showToast('error', 'Opps', error.message || 'Something went wrong');
-    }
+    },
+    onError: error => {
+      showToast('error', 'Opps', error.message);
+    },
+  });
+
+  const onSubmit = async (data: IUserData) => {
+    mutate(data);
   };
 
   return (

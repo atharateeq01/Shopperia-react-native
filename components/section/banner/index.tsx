@@ -1,3 +1,4 @@
+import { images } from '@/theme';
 import React, { useRef, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, Dimensions } from 'react-native';
 
@@ -10,14 +11,14 @@ export const ShoppingBanners = () => {
   const flatListRef = useRef<FlatList>(null);
 
   const bannerData = [
-    { text: 'Shopping is a form of self-care!', image: require('@/assets/images/shopping1.png') },
-    { text: 'Life is short, buy the shoes!', image: require('@/assets/images/shopping2.png') },
-    { text: 'Happiness can buy new clothes!', image: require('@/assets/images/shopping3.png') },
-    { text: 'You deserve a shopping spree!', image: require('@/assets/images/shopping1.png') },
-    { text: 'Treat yourself, buy that bag!', image: require('@/assets/images/shopping2.png') },
+    { text: 'Shopping is a form of self-care!', image: images.shopping1 },
+    { text: 'Life is short, buy the shoes!', image: images.shopping2 },
+    { text: 'Happiness can buy new clothes!', image: images.shopping3 },
+    { text: 'You deserve a shopping spree!', image: images.shopping1 },
+    { text: 'Treat yourself, buy that bag!', image: images.shopping2 },
     {
       text: 'Good things come to those who shop!',
-      image: require('@/assets/images/shopping3.png'),
+      image: images.shopping3,
     },
   ];
 
