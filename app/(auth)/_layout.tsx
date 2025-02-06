@@ -1,7 +1,8 @@
+import React, { useEffect, useState } from 'react';
+import { SplashScreen, Stack, router } from 'expo-router';
 import { getToken } from '@/api';
 import { useAppSlice } from '@/slices';
-import { router, SplashScreen, Stack } from 'expo-router';
-import { useEffect, useState } from 'react';
+import Header from '@/components/common/Header';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -37,17 +38,25 @@ const AuthLayout = () => {
   }
   // If logged out, render auth stack
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#bbdefb',
+        },
+        headerTitleAlign: 'center',
+        headerBackTitle: 'Go Back',
+        headerBlurEffect: 'extraLight',
+      }}>
       <Stack.Screen
         name="login/index"
         options={{
-          headerTitle: 'Login',
+          headerTitle: () => <Header title="Login" />,
         }}
       />
       <Stack.Screen
         name="signUp/index"
         options={{
-          headerTitle: 'Sign up',
+          headerTitle: () => <Header title="Sign up" />,
         }}
       />
     </Stack>

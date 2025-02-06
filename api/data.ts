@@ -1,6 +1,5 @@
+import { API_URL } from '@/utils/constant';
 import apiClient from './middleware';
-
-const API_URL = 'http://localhost:5000/api';
 
 export const fetchAllProducts = async (): Promise<any> => {
   try {

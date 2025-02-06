@@ -1,10 +1,12 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const API_URL = 'http://localhost:5000/api/auth';
+import { API_URL } from '@/utils/constant';
 
 export const loginUser = async (credentials: { email: string; password: string }) => {
   try {
-    const response = await axios.post(`${API_URL}/login`, credentials, { withCredentials: true });
+    const response = await axios.post(`${API_URL}/auth/login`, credentials, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error: any) {
     throw error.response?.data || { message: 'An error occurred during login.' };

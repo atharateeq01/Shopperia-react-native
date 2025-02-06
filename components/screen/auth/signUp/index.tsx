@@ -27,7 +27,7 @@ export const SignUp = () => {
     onSuccess: data => {
       if (data.success) {
         showToast('success', 'Horray', data.message);
-        router.push('/(auth)/login');
+        router.back();
       }
     },
     onError: error => {

@@ -1,10 +1,11 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
+import { API_URL } from '@/utils/constant';
 
 // Create an Axios instance
 const apiClient = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: API_URL,
 });
 
 // Add a request interceptor to include the token

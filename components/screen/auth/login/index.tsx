@@ -34,7 +34,7 @@ export const Login = () => {
       <ScrollView className="flex-grow px-4">
         {/* App Logo */}
         <View className="items-center mt-10">
-          <Image source={require('@/assets/images/logo-lg.png')} className="w-20 h-20" />
+          <Image source={require('@/assets/images/logo.png')} className="w-40 h-40" />
         </View>
 
         {/* Heading */}
