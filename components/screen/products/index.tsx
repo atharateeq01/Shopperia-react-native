@@ -27,7 +27,7 @@ export const Products = () => {
   }
 
   if (!productsData || productsError) {
-    router.back(); // Redirect if product not found
+    router.push('/+not-found'); // Redirect if product not found
     return null;
   }
 

@@ -19,4 +19,5 @@ export const colors = {
   lightOrange: '#ff8a4d', // Soft orange
   lightBlue: '#70a9ff', // Soft blue
   softGray: '#f4f4f4',
+  yellow: '#FFEA00',
 };

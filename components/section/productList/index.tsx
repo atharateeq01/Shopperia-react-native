@@ -1,7 +1,10 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { View, TextInput, FlatList } from 'react-native';
-import { IProduct } from '@/utils/helper';
-import { Button } from '@/components/common/Button';
+import { Ionicons } from '@expo/vector-icons';
+import { View, TextInput, FlatList, Text, TouchableOpacity } from 'react-native';
+
+import type { IProduct } from '@/utils/helper';
 import { ProductCard } from '@/components/section/productCard';
 
 interface ProductListProps {
@@ -12,25 +15,28 @@ interface ProductListProps {
 export const ProductList: React.FC<ProductListProps> = ({ products, productsPerPage = 10 }) => {
   const [productsData, setProductsData] = useState<IProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null);
   const [page, setPage] = useState(1);
+  const [showDiscounted, setShowDiscounted] = useState(false);
 
   useEffect(() => {
     loadFilteredProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery, sortOrder, page, products]);
+  }, [products, showDiscounted, sortOrder, searchQuery]); // Only products and showDiscounted are needed here
 
   const loadFilteredProducts = () => {
-    let filteredProducts = products
-      .slice(0, page * productsPerPage)
-      .filter(product => product.productName.toLowerCase().includes(searchQuery.toLowerCase()));
+    const filteredProducts = products.filter(
+      product =>
+        product.productName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+        (showDiscounted ? product.discount && product.discount > 0 : true),
+    );
 
     if (sortOrder) {
       filteredProducts.sort((a, b) =>
         sortOrder === 'asc' ? a.price - b.price : b.price - a.price,
       );
     }
-    setProductsData(filteredProducts);
+    setProductsData(filteredProducts.slice(0, page * productsPerPage));
   };
 
   const loadMoreProducts = () => {
@@ -39,34 +45,67 @@ export const ProductList: React.FC<ProductListProps> = ({ products, productsPerP
     }
   };
 
+  const handleSortChange = (order: 'asc' | 'desc') => {
+    // eslint-disable-next-line no-unused-expressions
+    sortOrder === order ? setSortOrder(null) : setSortOrder(order);
+  };
+
   const renderProduct = ({ item }: { item: IProduct }) => <ProductCard product={item} />;
 
   return (
-    <View className="flex-1 bg-lightGrayPurple p-4">
+    <View className="flex-1 bg-gray-100 p-4">
       {/* Search Container */}
-      <View className="flex-row mb-4">
+      <View className="flex-row items-center mb-4 bg-white rounded-full shadow-sm">
+        <Ionicons name="search" size={24} color="gray" style={{ marginLeft: 12 }} />
         <TextInput
-          style={{ flex: 1 }}
-          className="border border-gray-300 rounded-lg p-2 mr-2"
-          placeholder="Search by name"
+          className="flex-1 p-3 pl-2"
+          placeholder="Search products"
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
       </View>
 
-      {/* Sort Filter Buttons */}
+      {/* Filter Options */}
       <View className="flex-row justify-between mb-4">
-        <Button
-          buttonText="Low to High"
-          onPress={() => setSortOrder('asc')}
-          variant={sortOrder === 'asc' ? 'primary' : 'clear'}
-        />
-        <Button
-          buttonText="High to Low"
-          onPress={() => setSortOrder('desc')}
-          variant={sortOrder === 'desc' ? 'primary' : 'clear'}
-        />
+        <TouchableOpacity
+          onPress={() => setShowDiscounted(!showDiscounted)}
+          className={`flex-row items-center p-2 rounded-full ${showDiscounted ? 'bg-blue-500' : 'bg-gray-300'}`}>
+          <Ionicons
+            name={showDiscounted ? 'pricetag' : 'pricetag-outline'}
+            size={20}
+            color={showDiscounted ? 'white' : 'black'}
+          />
+          <Text className={`ml-2 ${showDiscounted ? 'text-white' : 'text-black'}`}>Discounted</Text>
+        </TouchableOpacity>
+
+        <View className="flex-row">
+          <TouchableOpacity
+            onPress={() => handleSortChange('asc')}
+            className={`p-2 rounded-l-full ${sortOrder === 'asc' ? 'bg-blue-500' : 'bg-gray-300'}`}>
+            <View className="flex-1 flex-row">
+              <Text className={`${sortOrder === 'asc' ? 'text-white' : 'text-black'}`}>
+                High to Low
+              </Text>
+              <Ionicons name="arrow-up" size={20} color={sortOrder === 'asc' ? 'white' : 'black'} />
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleSortChange('desc')}
+            className={`p-2 rounded-r-full ${sortOrder === 'desc' ? 'bg-blue-500' : 'bg-gray-300'}`}>
+            <View className="flex-1 flex-row">
+              <Text className={`${sortOrder === 'desc' ? 'text-white' : 'text-black'}`}>
+                High to Low
+              </Text>
+              <Ionicons
+                name="arrow-down"
+                size={20}
+                color={sortOrder === 'desc' ? 'white' : 'black'}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
+
       {/* Product List */}
       <FlatList
         data={productsData}
@@ -74,9 +113,10 @@ export const ProductList: React.FC<ProductListProps> = ({ products, productsPerP
         keyExtractor={item => item._id}
         onEndReached={loadMoreProducts}
         onEndReachedThreshold={0.5}
-        contentContainerStyle={{ paddingBottom: 4 }}
+        contentContainerStyle={{ paddingBottom: 20 }}
         numColumns={2}
         columnWrapperStyle={{ justifyContent: 'space-between' }}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );

@@ -56,6 +56,14 @@ export default function DrawerWithTabsLayout() {
         }}
       />
       <Drawer.Screen
+        name="order/index"
+        options={{
+          headerTitle: 'Order',
+          drawerLabel: 'Order',
+          drawerIcon: ({ color }) => <Ionicons name="bag-check-outline" size={24} color={color} />,
+        }}
+      />
+      <Drawer.Screen
         name="logout/index"
         options={{
           headerTitle: 'Logout',
