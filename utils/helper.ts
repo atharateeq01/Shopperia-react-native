@@ -89,5 +89,5 @@ export interface ICreateCart {
 export interface ICart {
   _id: string;
   productId: IProduct;
-  itemAmounts: string;
+  itemAmount: number;
 }

@@ -5,11 +5,13 @@ export default function DrawerWithTabsLayout() {
   return (
     <Drawer
       screenOptions={{
-        headerShown: false,
         drawerType: 'front',
         drawerStyle: {
           backgroundColor: '#f4f4f4',
           width: 240,
+        },
+        headerStyle: {
+          backgroundColor: '#bbdefb',
         },
         drawerLabelStyle: {
           fontSize: 18,
@@ -29,9 +31,19 @@ export default function DrawerWithTabsLayout() {
       <Drawer.Screen
         name="home"
         options={{
+          headerShown: false,
           headerTitle: 'Home',
           drawerLabel: 'Home',
           drawerIcon: ({ color }) => <Ionicons name="home-outline" size={24} color={color} />,
+        }}
+      />
+
+      <Drawer.Screen
+        name="cart/index"
+        options={{
+          headerTitle: 'Cart',
+          drawerLabel: 'Cart',
+          drawerIcon: ({ color }) => <Ionicons name="cart-outline" size={24} color={color} />,
         }}
       />
 

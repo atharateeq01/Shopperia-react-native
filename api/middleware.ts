@@ -1,7 +1,7 @@
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { API_URL } from '@/utils/constant';
+import { getToken } from './auth';
 
 // Create an Axios instance
 const apiClient = axios.create({
@@ -13,11 +13,11 @@ apiClient.interceptors.request.use(
   async config => {
     try {
       // Fetch the token from AsyncStorage
-      const token = await AsyncStorage.getItem('token');
+      const token = await getToken();
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       } else {
-        router.push('/');
+        router.push('/(auth)/sessionExpired');
       }
     } catch (error) {
       console.error('Error retrieving token:', error);

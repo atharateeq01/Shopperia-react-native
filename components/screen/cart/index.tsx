@@ -1,61 +1,87 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  StyleSheet,
-  ActivityIndicator,
-} from 'react-native';
-import { router } from 'expo-router';
-import { ICart, IProduct } from '@/utils/helper';
+import React, { useState, useEffect } from 'react';
+import { View, Text, Image, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { ICart } from '@/utils/helper';
 import { colors } from '@/theme';
 import { Button } from '@/components/common/Button';
-import { useQuery } from '@tanstack/react-query';
-import { fetchAllCart } from '@/api/cart';
-
-// Mock cart data (replace with your actual cart state management logic)
-const cartItems: IProduct[] = [];
+import { createCart, fetchAllCart } from '@/api/cart';
+import { useAppSlice } from '@/slices';
 
 export const Cart = () => {
-  // Fetch categories
-  const {
-    data: cartData,
-    isLoading: isCartLoading,
-    error: cartError,
-  } = useQuery({
+  const [cartItems, setCartItems] = useState<ICart[]>([]);
+  const { user } = useAppSlice();
+
+  // Fetch cart data from API
+  const { data: cartData, isLoading: isCartLoading } = useQuery({
     queryKey: ['carts'],
     queryFn: fetchAllCart,
   });
 
-  // Handle quantity change for a product
-  // const handleQuantityChange = (id: string, newQuantity: number) => {
-  //   const updatedItems = cartData.cartItems.map((item: ICart) =>
-  //     item._id === id ? { ...item, quantity: newQuantity } : item,
-  //   );
-  // };
+  // Mutation to add product to cart
+  const { mutate: addToCart } = useMutation({
+    mutationFn: createCart,
+    onSuccess(data, variables, context) {
+      console.log(data, variables, context);
+    },
+  });
+
+  useEffect(() => {
+    if (cartData) {
+      setCartItems(cartData.cartItems);
+    }
+  }, [cartData]);
 
   // Calculate total price
   const calculateTotal = () => {
-    return 0;
-  };
-
-  // Calculate tax (assuming 10% tax)
-  const calculateTax = () => {
-    return calculateTotal() * 0.1;
+    return cartItems?.reduce((total, item) => total + item?.productId?.price * item.itemAmount, 0);
   };
 
   // Calculate discount (assuming a flat discount of $5)
   const calculateDiscount = () => {
-    return 5;
+    return cartItems?.reduce((totalDiscount, item) => {
+      const productPrice = item?.productId?.price;
+      const itemAmount = item?.itemAmount;
+      const productDiscount = item?.productId?.discount || 0; // Default to 0 if no discount
+
+      // Calculate discount for this item
+      const itemTotalPrice = productPrice * itemAmount;
+      const itemDiscount = (productDiscount / 100) * itemTotalPrice;
+      return totalDiscount + itemDiscount;
+    }, 0);
   };
 
   // Calculate final total
   const calculateFinalTotal = () => {
-    return 0;
+    return calculateTotal() - calculateDiscount();
   };
 
+  // Handle quantity change
+  const handleQuantityChange = (productItemId: string, newQuantity: number) => {
+    console.log(productItemId, newQuantity);
+
+    // If the new quantity is 0, remove the item from the cart
+    if (newQuantity === 0) {
+      setCartItems(prevCartItems =>
+        prevCartItems.filter(item => item.productId._id !== productItemId),
+      );
+      addToCart({
+        productIdToDelete: productItemId,
+      });
+    } else {
+      // Update the local state immediately if the quantity is not 0
+      setCartItems(prevCartItems =>
+        prevCartItems.map(item =>
+          item.productId._id === productItemId ? { ...item, itemAmount: newQuantity } : item,
+        ),
+      );
+      addToCart({
+        addInCart: {
+          productId: productItemId,
+          itemAmount: newQuantity,
+        },
+      });
+    }
+  };
   if (isCartLoading) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
@@ -69,18 +95,24 @@ export const Cart = () => {
     <View className="flex-1 p-4 bg-white">
       {/* Greeting and Quote */}
       <View className="mb-6">
-        <Text className="text-2xl font-bold text-black">Hello User 👋</Text>
+        <Text className="text-2xl font-bold text-black">Hello {user?.firstName} 👋</Text>
         <Text className="text-lg text-gray-500 mt-2">
-          "Your cart is your first step towards something amazing. Make it count!"
+          Your cart is your first step towards something amazing. Make it count!
         </Text>
       </View>
 
       {/* Product List */}
       <FlatList
-        data={cartData.cartItems}
-        keyExtractor={item => item.productId._id}
+        data={cartItems}
+        keyExtractor={item => item._id}
         renderItem={({ item }) => (
-          <View className="flex-row items-center bg-gray-100 rounded-lg p-4 mb-4">
+          <View className="flex-row items-center bg-gray-100 rounded-lg p-4 mb-4 relative">
+            {item.productId.discount && (
+              <View className="absolute top-2 left-2 bg-red-500 py-1 px-2 rounded-md z-10">
+                <Text className="text-white text-xs font-bold">{item.productId.discount}% OFF</Text>
+              </View>
+            )}
+
             {/* Product Image */}
             <Image
               source={{ uri: item.productId.productImage }}
@@ -97,13 +129,13 @@ export const Cart = () => {
             {/* Quantity Selector */}
             <View className="flex-row items-center">
               <TouchableOpacity
-                // onPress={() => handleQuantityChange(item._id, Math.max(1, item.quantity - 1))}
+                onPress={() => handleQuantityChange(item.productId._id, item.itemAmount - 1)}
                 className="bg-gray-200 p-2 rounded-full">
                 <Text className="text-lg font-bold">-</Text>
               </TouchableOpacity>
               <Text className="mx-4 text-lg font-bold">{item.itemAmount}</Text>
               <TouchableOpacity
-                // onPress={() => handleQuantityChange(item._id, item.quantity + 1)}
+                onPress={() => handleQuantityChange(item.productId._id, item.itemAmount + 1)}
                 className="bg-gray-200 p-2 rounded-full">
                 <Text className="text-lg font-bold">+</Text>
               </TouchableOpacity>
@@ -113,14 +145,10 @@ export const Cart = () => {
       />
 
       {/* Summary Section */}
-      <View className="mt-6 border-t border-gray-200 pt-4">
+      <View className="mt-2 border-t border-gray-200 pb-6">
         <View className="flex-row justify-between mb-2">
           <Text className="text-lg text-gray-500">Subtotal</Text>
           <Text className="text-lg font-bold text-black">${calculateTotal().toFixed(2)}</Text>
-        </View>
-        <View className="flex-row justify-between mb-2">
-          <Text className="text-lg text-gray-500">Tax (10%)</Text>
-          <Text className="text-lg font-bold text-black">${calculateTax().toFixed(2)}</Text>
         </View>
         <View className="flex-row justify-between mb-4">
           <Text className="text-lg text-gray-500">Discount</Text>

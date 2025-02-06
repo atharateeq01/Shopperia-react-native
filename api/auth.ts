@@ -1,6 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { API_URL } from '@/utils/constant';
+import moment from 'moment';
 
 export const loginUser = async (credentials: { email: string; password: string }) => {
   try {
@@ -20,7 +21,9 @@ export const getToken = async () => {
     const expirationTime = await AsyncStorage.getItem('tokenExpiration');
 
     if (token && expirationTime) {
-      if (Date.now() < parseInt(expirationTime)) {
+      // Check if the current time is before the expiration time
+      const isExpired = moment().isBefore(moment(expirationTime));
+      if (isExpired) {
         return token; // Token is still valid
       } else {
         await AsyncStorage.removeItem('token');

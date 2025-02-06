@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { State, Dispatch } from '@/utils/store';
-import { User } from '@/types';
+import { IUserData } from '@/utils/helper';
 
 export interface AppState {
   checked: boolean;
   loggedIn: boolean;
-  user?: User;
+  user?: IUserData;
 }
 
 const initialState: AppState = {
@@ -23,7 +23,7 @@ const slice = createSlice({
       state.checked = true;
       state.loggedIn = payload;
     },
-    setUser: (state: AppState, { payload }: PayloadAction<User | undefined>) => {
+    setUser: (state: AppState, { payload }: PayloadAction<IUserData | undefined>) => {
       state.user = payload;
     },
     reset: () => initialState,

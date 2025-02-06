@@ -3,11 +3,14 @@ import { SplashScreen, Stack, router } from 'expo-router';
 import { getToken } from '@/api';
 import { useAppSlice } from '@/slices';
 import Header from '@/components/common/Header';
+import { DataPersistKeys, useDataPersist } from '@/hooks';
+import { IUserData } from '@/utils/helper';
 
 SplashScreen.preventAutoHideAsync();
 
 const AuthLayout = () => {
-  const { loggedIn } = useAppSlice();
+  const { dispatch, setUser, setLoggedIn } = useAppSlice();
+  const { getPersistData } = useDataPersist();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,8 +18,10 @@ const AuthLayout = () => {
       try {
         const token = await getToken();
         // Check if user is logged in or token exists
-        if (loggedIn || token) {
-          // Redirect to main if logged in or token is found
+        if (token) {
+          const user: IUserData = await getPersistData(DataPersistKeys.USER);
+          dispatch(setUser(user));
+          dispatch(setLoggedIn(!!user));
           router.push('/(main)');
         } else {
           // Otherwise, stay in the auth flow
@@ -24,18 +29,18 @@ const AuthLayout = () => {
           SplashScreen.hideAsync();
         }
       } catch (error) {
-        // Optionally, handle error (e.g., token fetch failed)
         console.error(error);
       }
     }
     preload();
-  }, [loggedIn]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) {
     SplashScreen.hideAsync();
-    // You can return null or a loading spinner if needed
     return null;
   }
+
   // If logged out, render auth stack
   return (
     <Stack
@@ -56,6 +61,13 @@ const AuthLayout = () => {
       <Stack.Screen
         name="signUp/index"
         options={{
+          headerTitle: () => <Header title="Sign up" />,
+        }}
+      />
+      <Stack.Screen
+        name="sessionExpired/index"
+        options={{
+          headerShown: false,
           headerTitle: () => <Header title="Sign up" />,
         }}
       />

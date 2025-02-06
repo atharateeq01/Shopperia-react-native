@@ -35,7 +35,7 @@ export const Home = () => {
     queryFn: fetchAllProducts,
   });
   return (
-    <View className="flex-1 p-4 bg-white">
+    <View className="p-4 bg-white">
       {/* Greeting */}
       <View className="flex-row items-center justify-between px-4 py-2">
         <View className="flex-1 justify-start">
@@ -46,7 +46,7 @@ export const Home = () => {
         <View>
           <Button
             onPress={() => router.push('(main)/home/cart')}
-            buttonText="0"
+            buttonText="Cart"
             iconLeft={<Ionicons name="cart" color={'#fff'} size={20} />}
           />
         </View>
