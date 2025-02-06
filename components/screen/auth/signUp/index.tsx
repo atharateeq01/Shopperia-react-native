@@ -40,11 +40,11 @@ export const SignUp = () => {
   };
 
   return (
-    <SafeAreaView className="flex-1 bg-white">
+    <SafeAreaView className="flex-1 bg-white pb-4">
       <ScrollView className="flex-grow px-4">
         {/* App Logo */}
-        <View className="items-center mt-10">
-          <Image source={require('@/assets/images/logo-lg.png')} className="w-20 h-20" />
+        <View className="items-center mt-5">
+          <Image source={require('@/assets/images/logo.png')} className="w-40 h-40" />
         </View>
 
         {/* Heading */}
