@@ -16,7 +16,7 @@ export const createCart = async (data: {
 
 export const fetchAllCart = async (): Promise<any> => {
   try {
-    const response = await apiClient.get(`${API_URL}/cart`);
+    const response = await apiClient.get(`${API_URL}/cart/user`);
     return response.data.data[0];
   } catch (error: any) {
     throw error.response?.data || { message: 'An error occurred while fetching the user.' };

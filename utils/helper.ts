@@ -91,3 +91,15 @@ export interface ICart {
   productId: IProduct;
   itemAmount: number;
 }
+
+export interface ICreateOrder {
+  orderAmount: number;
+  products: {
+    productId: string;
+    productPrice: number;
+    discountApplied?: number;
+    itemAmount: number;
+  }[];
+  receiverAddress: string;
+  receiverPhoneNumber: string;
+}
