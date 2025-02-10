@@ -69,7 +69,11 @@ export const ProductDetails = () => {
           useNativeDriver: true,
         })}
         scrollEventThrottle={16}>
-        <Image source={{ uri: product.productImage }} className="w-full h-96 object-cover" />
+        <Image
+          source={{ uri: product.productImage }}
+          className="w-full h-[500px]"
+          resizeMode="cover"
+        />
 
         <View className="p-5">
           <Text className="text-3xl font-bold text-gray-800 mb-2">{product.productName}</Text>

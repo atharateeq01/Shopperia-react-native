@@ -35,7 +35,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         )}
 
         {/* Product Image */}
-        <Image source={{ uri: product.productImage }} className="w-full h-36 rounded-lg mb-2" />
+        <Image
+          source={{ uri: product.productImage }}
+          className="w-full h-36 rounded-lg mb-2"
+          resizeMode="cover"
+        />
 
         {/* Product Details */}
         <View className="flex-1">

@@ -1,5 +1,5 @@
 import { View, Text } from 'react-native';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/common/Button';
 import { createOrder } from '@/api/order';
 import { ICart } from '@/utils/helper';
@@ -11,10 +11,13 @@ interface CheckoutProps {
 }
 
 export const Checkout = ({ cartItems, refetch }: CheckoutProps) => {
+  const queryClient = useQueryClient();
+
   const { mutate: makeOrder } = useMutation({
     mutationFn: createOrder,
     onSuccess: () => {
-      refetch();
+      queryClient.invalidateQueries({ queryKey: ['orders'] });
+      queryClient.invalidateQueries({ queryKey: ['carts'] });
       router.back();
     },
   });

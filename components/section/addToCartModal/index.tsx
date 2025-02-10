@@ -21,9 +21,6 @@ export const AddToCartModal: React.FC<IAddToCartModalProps> = ({ product, isVisi
 
   const { mutate: addToCart } = useMutation({
     mutationFn: createCart,
-    onSuccess(data, variables, context) {
-      console.log(data, variables, context);
-    },
   });
 
   useEffect(() => {

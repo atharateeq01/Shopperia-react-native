@@ -103,3 +103,18 @@ export interface ICreateOrder {
   receiverAddress: string;
   receiverPhoneNumber: string;
 }
+export interface IOrder {
+  _id: string;
+  orderName: string;
+  orderAmount: number;
+  orderStatus: 'Delivered' | 'Processing' | 'Cancelled';
+  createdAt: Date;
+  products: {
+    productId: IProduct;
+    productPrice: number;
+    discountApplied: number;
+    itemAmount: number;
+  }[];
+  receiverAddress: string;
+  receiverPhoneNumber: string;
+}

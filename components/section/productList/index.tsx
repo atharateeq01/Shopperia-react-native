@@ -9,14 +9,12 @@ import { ProductCard } from '@/components/section/productCard';
 
 interface ProductListProps {
   products: IProduct[];
-  productsPerPage?: number;
 }
 
-export const ProductList: React.FC<ProductListProps> = ({ products, productsPerPage = 10 }) => {
+export const ProductList: React.FC<ProductListProps> = ({ products }) => {
   const [productsData, setProductsData] = useState<IProduct[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null);
-  const [page, setPage] = useState(1);
   const [showDiscounted, setShowDiscounted] = useState(false);
 
   useEffect(() => {
@@ -36,13 +34,7 @@ export const ProductList: React.FC<ProductListProps> = ({ products, productsPerP
         sortOrder === 'asc' ? a.price - b.price : b.price - a.price,
       );
     }
-    setProductsData(filteredProducts.slice(0, page * productsPerPage));
-  };
-
-  const loadMoreProducts = () => {
-    if (page * productsPerPage < products.length) {
-      setPage(prevPage => prevPage + 1);
-    }
+    setProductsData(filteredProducts);
   };
 
   const handleSortChange = (order: 'asc' | 'desc') => {
@@ -111,8 +103,6 @@ export const ProductList: React.FC<ProductListProps> = ({ products, productsPerP
         data={productsData}
         renderItem={renderProduct}
         keyExtractor={item => item._id}
-        onEndReached={loadMoreProducts}
-        onEndReachedThreshold={0.5}
         contentContainerStyle={{ paddingBottom: 20 }}
         numColumns={2}
         columnWrapperStyle={{ justifyContent: 'space-between' }}

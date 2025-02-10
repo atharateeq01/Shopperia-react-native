@@ -14,96 +14,10 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-interface IProduct {
-  _id: string;
-  name: string;
-  description: string;
-  image: string;
-}
-
-interface IOrder {
-  _id: string;
-  orderName: string;
-  orderAmount: number;
-  orderStatus: 'Delivered' | 'Processing' | 'Cancelled';
-  createdAt: Date;
-  Products: {
-    productId: IProduct;
-    discountApplied: number;
-    itemAmount: number;
-  }[];
-}
-
-const mockOrders: IOrder[] = [
-  {
-    _id: '1',
-    orderName: 'Order #1234',
-    orderAmount: 120,
-    orderStatus: 'Delivered',
-    createdAt: new Date('2023-05-15'),
-    Products: [
-      {
-        productId: {
-          _id: 'p1',
-          name: 'Smartphone',
-          description: 'Latest 5G smartphone',
-          image: 'https://via.placeholder.com/50',
-        },
-        discountApplied: 20,
-        itemAmount: 100,
-      },
-    ],
-  },
-  {
-    _id: '2',
-    orderName: 'Order #5678',
-    orderAmount: 220,
-    orderStatus: 'Processing',
-    createdAt: new Date('2023-05-20'),
-    Products: [
-      {
-        productId: {
-          _id: 'p2',
-          name: 'Laptop',
-          description: 'High-performance laptop',
-          image: 'https://via.placeholder.com/50',
-        },
-        discountApplied: 50,
-        itemAmount: 200,
-      },
-    ],
-  },
-  {
-    _id: '3',
-    orderName: 'Order #9012',
-    orderAmount: 80,
-    orderStatus: 'Cancelled',
-    createdAt: new Date('2023-05-25'),
-    Products: [
-      {
-        productId: {
-          _id: 'p3',
-          name: 'Wireless Earbuds',
-          description: 'Noise-cancelling earbuds',
-          image: 'https://via.placeholder.com/50',
-        },
-        discountApplied: 10,
-        itemAmount: 70,
-      },
-      {
-        productId: {
-          _id: 'p4',
-          name: 'Wireless ',
-          description: 'Noise-cancelling earbuds',
-          image: 'https://via.placeholder.com/50',
-        },
-        discountApplied: 10,
-        itemAmount: 70,
-      },
-    ],
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import { fetchAllOrder } from '@/api/order';
+import moment from 'moment';
+import { IOrder } from '@/utils/helper';
 
 export const Order = () => {
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
@@ -112,14 +26,19 @@ export const Order = () => {
   const [amountFilter, setAmountFilter] = useState<string>('');
   const [showDatePicker, setShowDatePicker] = useState(false);
 
+  const { data: orderData } = useQuery({
+    queryKey: ['orders'],
+    queryFn: fetchAllOrder,
+  });
+
   const filteredOrders = useMemo(() => {
-    return mockOrders.filter(order => {
+    return orderData?.filter((order: IOrder) => {
       const statusMatch = !statusFilter || order.orderStatus === statusFilter;
       const dateMatch = !dateFilter || order.createdAt.toDateString() === dateFilter.toDateString();
       const amountMatch = !amountFilter || order.orderAmount <= Number.parseFloat(amountFilter);
       return statusMatch && dateMatch && amountMatch;
     });
-  }, [statusFilter, dateFilter, amountFilter]);
+  }, [statusFilter, dateFilter, amountFilter, orderData]);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -135,11 +54,7 @@ export const Order = () => {
   };
 
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+    return moment(date).format('MMM D, YYYY');
   };
 
   const renderOrderItem = ({ item }: { item: IOrder }) => (
@@ -226,18 +141,26 @@ export const Order = () => {
                     <Text style={styles.modalStatusText}>{selectedOrder.orderStatus}</Text>
                   </View>
                 </View>
-                {selectedOrder.Products.map(item => (
+                {selectedOrder.products.map(item => (
                   <View key={item.productId._id} style={styles.productItem}>
-                    <Image source={{ uri: item.productId.image }} style={styles.productImage} />
+                    <Image
+                      source={{ uri: item.productId.productImage }}
+                      style={styles.productImage}
+                    />
                     <View style={styles.productInfo}>
-                      <Text style={styles.productName}>{item.productId.name}</Text>
-                      <Text style={styles.productDescription}>{item.productId.description}</Text>
+                      <Text style={styles.productName}>{item.productId.productName}</Text>
+                      <Text style={styles.productDescription}>
+                        {item.productId.productDescription}
+                      </Text>
                     </View>
                     <View style={styles.productPricing}>
                       <Text style={styles.productAmount}>${item.itemAmount.toFixed(2)}</Text>
-                      <Text style={styles.productDiscount}>
-                        -${item.discountApplied.toFixed(2)}
-                      </Text>
+                      {item.discountApplied && (
+                        <Text style={styles.productDiscount}>
+                          -${item.discountApplied.toFixed(2)}
+                        </Text>
+                      )}
+                      <Text style={styles.productAmount}>items: {item.itemAmount}</Text>
                     </View>
                   </View>
                 ))}

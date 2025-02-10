@@ -16,6 +16,7 @@ export const Cart = () => {
   const {
     data: cartData,
     isLoading,
+    isError,
     refetch,
   } = useQuery({
     queryKey: ['carts'],
@@ -32,9 +33,8 @@ export const Cart = () => {
   }, []);
 
   useEffect(() => {
-    console.log(cartData, 'cart');
-
-    setCartItems(cartData?.cartItems || []);
+    setCartItems(!isError && cartData?.cartItems ? cartData?.cartItems : []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartData]);
 
   const handleQuantityChange = (productItemId: string, newQuantity: number) => {

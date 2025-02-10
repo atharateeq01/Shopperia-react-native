@@ -30,25 +30,27 @@ export const Categories = () => {
       ) : categoriesError ? (
         <Text className="text-center text-red-500">Failed to load categories</Text>
       ) : (
-        <FlatList
-          data={categoryData}
-          numColumns={2}
-          keyExtractor={(item: ICategory) => item._id}
-          className="pb-5"
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              className="w-48 m-2 p-4 bg-gray-100 rounded-lg items-center"
-              onPress={() => handleCategoryPress(item._id)}>
-              <Image source={{ uri: item.categoryImage }} className="w-40 h-28 rounded-xl" />
-              <Text className="font-semibold text-base mt-3">{item.categoryName}</Text>
-              {item.categoryDescription && (
-                <Text className="text-xs text-gray-500 mt-2 text-center">
-                  {item.categoryDescription}
-                </Text>
-              )}
-            </TouchableOpacity>
-          )}
-        />
+        <View className="justify-between items-center">
+          <FlatList
+            data={categoryData}
+            numColumns={2}
+            keyExtractor={(item: ICategory) => item._id}
+            className="pb-5"
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                className="w-48 m-2 p-4 bg-gray-100 rounded-lg items-center"
+                onPress={() => handleCategoryPress(item._id)}>
+                <Image source={{ uri: item.categoryImage }} className="w-40 h-28 rounded-xl" />
+                <Text className="font-semibold text-base mt-3">{item.categoryName}</Text>
+                {item.categoryDescription && (
+                  <Text className="text-xs text-gray-500 mt-2 text-center">
+                    {item.categoryDescription}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            )}
+          />
+        </View>
       )}
     </View>
   );
