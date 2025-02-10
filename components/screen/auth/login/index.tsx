@@ -53,7 +53,7 @@ export const Login = () => {
                 <View className="mb-4">
                   <InputField
                     label="Email"
-                    type="text"
+                    type="email"
                     placeholder="Enter your email"
                     error={errors.email?.message}
                     {...field}

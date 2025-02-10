@@ -1,3 +1,6 @@
+import moment from 'moment';
+import { IOrder, OrderStatus } from './interface';
+
 export const isAlphabetic = (value: string): boolean => {
   const regex = /^[a-zA-Z]+$/;
   return regex.test(value);
@@ -24,7 +27,7 @@ export const isStrongPassword = (password: string): boolean => {
 };
 
 // Function to create initials avatar
-export const getInitials = (firstName: string, lastName: string) => {
+export const getInitials = (firstName: string = '', lastName: string = '') => {
   return `${firstName[0]}${lastName[0]}`;
 };
 
@@ -34,17 +37,46 @@ export const capitalizeName = (name: string) => {
   return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 };
 
-export interface IUser {
-  firstName: string;
-  lastName: string;
-  userName: string;
-  email: string;
-  role?: string;
-}
-export interface IUserData extends IUser {
-  _id?: string;
-  password: string;
-}
+const statusColors: Record<OrderStatus, string> = {
+  Delivered: 'bg-green-500',
+  Processing: 'bg-blue-500',
+  Cancelled: 'bg-red-500',
+};
+
+export const getStatusColor = (status: OrderStatus) => {
+  return statusColors[status] || 'bg-gray-500';
+};
+
+export const formatDate = (date: Date) => {
+  return moment(date).format('MMM D, YYYY');
+};
+
+export const getDateThreshold = (dateFilter: string | null) => {
+  if (!dateFilter) return null;
+  const now = moment();
+  switch (dateFilter) {
+    case 'A day ago':
+      return now.subtract(1, 'days');
+    case 'A week ago':
+      return now.subtract(7, 'days');
+    case 'A month ago':
+      return now.subtract(1, 'months');
+    default:
+      return null;
+  }
+};
+
+export const matchesStatus = (order: IOrder, statusFilter: string | null) =>
+  !statusFilter || order.orderStatus === statusFilter;
+
+export const matchesDate = (order: IOrder, dateThreshold: moment.Moment | null) =>
+  !dateThreshold || moment(order.createdAt).isAfter(dateThreshold);
+
+export const matchesAmount = (order: IOrder, amountThreshold: number | null) =>
+  amountThreshold === null || order.orderAmount >= amountThreshold;
+
+export const matchesOrderName = (order: IOrder, lowerCaseOrderName: string | null) =>
+  !lowerCaseOrderName || order.orderName.toLowerCase().includes(lowerCaseOrderName);
 
 export const colors = {
   primary: '#FB6831',
@@ -62,59 +94,3 @@ export const colors = {
   muted: '#707981',
   white: '#FFFFFF',
 };
-
-export interface ICategory {
-  _id: string;
-  categoryName: string;
-  categoryDescription: string;
-  categoryImage: string;
-}
-
-export interface IProduct {
-  _id: string;
-  productName: string;
-  productDescription: string;
-  productImage: string;
-  price: number;
-  quantity: number;
-  categoryId: ICategory;
-  discount?: number;
-}
-
-export interface ICreateCart {
-  productId: string;
-  itemAmount: number;
-}
-
-export interface ICart {
-  _id: string;
-  productId: IProduct;
-  itemAmount: number;
-}
-
-export interface ICreateOrder {
-  orderAmount: number;
-  products: {
-    productId: string;
-    productPrice: number;
-    discountApplied?: number;
-    itemAmount: number;
-  }[];
-  receiverAddress: string;
-  receiverPhoneNumber: string;
-}
-export interface IOrder {
-  _id: string;
-  orderName: string;
-  orderAmount: number;
-  orderStatus: 'Delivered' | 'Processing' | 'Cancelled';
-  createdAt: Date;
-  products: {
-    productId: IProduct;
-    productPrice: number;
-    discountApplied: number;
-    itemAmount: number;
-  }[];
-  receiverAddress: string;
-  receiverPhoneNumber: string;
-}

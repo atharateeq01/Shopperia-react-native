@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 // Define the props type for the InputField
 interface InputFieldProps {
   label: string;
-  type: 'text' | 'password' | 'email' | 'number';
+  type: 'text' | 'password' | 'email' | 'number' | 'phonenumber';
   placeholder: string;
   isDisabled?: boolean;
   error?: string;
@@ -33,6 +33,15 @@ const InputFieldComponent = React.forwardRef<TextInput, InputFieldProps>(
             placeholderClassName={'p-3'}
             className={`border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md p-3 ${isDisabled ? 'bg-gray-100' : ''}`}
             value={value}
+            keyboardType={
+              type === 'email'
+                ? 'email-address'
+                : type === 'number'
+                  ? 'numeric'
+                  : type === 'phonenumber'
+                    ? 'phone-pad'
+                    : 'default'
+            }
             onChangeText={onChange}
           />
           {type === 'password' && (
