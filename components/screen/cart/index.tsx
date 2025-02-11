@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, Alert } from 'react-native';
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ICart } from '@/utils/interface';
 import { colors } from '@/theme';
 import { fetchAllCart, createCart } from '@/api/cart';
@@ -12,12 +12,12 @@ import { Checkout } from '@/components/section/Checkout';
 export const Cart = () => {
   const [cartItems, setCartItems] = useState<ICart[]>([]);
   const { user } = useAppSlice();
+  const queryClient = useQueryClient();
 
   const {
     data: cartData,
     isLoading,
     isError,
-    refetch,
   } = useQuery({
     queryKey: ['carts'],
     queryFn: fetchAllCart,
@@ -25,7 +25,9 @@ export const Cart = () => {
 
   const { mutate: addToCart } = useMutation({
     mutationFn: createCart,
-    onSuccess: () => refetch(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['carts'] });
+    },
   });
 
   useEffect(() => {
@@ -83,7 +85,7 @@ export const Cart = () => {
           handleDeleteItem={handleDeleteItem}
         />
       )}
-      <Checkout cartItems={cartItems} refetch={refetch} />
+      <Checkout cartItems={cartItems} />
     </View>
   );
 };

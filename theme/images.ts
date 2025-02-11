@@ -6,6 +6,8 @@ export const images: { [key: string]: ReturnType<typeof require> } = {
   shopping1: require('@/assets/images/shopping1.png'),
   shopping2: require('@/assets/images/shopping2.png'),
   shopping3: require('@/assets/images/shopping3.png'),
+  emptyCart: require('@/assets/images/empty-cart.png'),
+  emptyOrder: require('@/assets/images/empty-order.png'),
 };
 
 // preload images

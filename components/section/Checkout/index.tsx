@@ -9,10 +9,9 @@ import { InputField } from '@/components/common/InputField';
 
 interface CheckoutProps {
   cartItems: ICart[];
-  refetch: any;
 }
 
-export const Checkout = ({ cartItems, refetch }: CheckoutProps) => {
+export const Checkout = ({ cartItems }: CheckoutProps) => {
   const queryClient = useQueryClient();
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -22,8 +21,8 @@ export const Checkout = ({ cartItems, refetch }: CheckoutProps) => {
   const { mutate: makeOrder } = useMutation({
     mutationFn: createOrder,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['orders'] });
-      queryClient.invalidateQueries({ queryKey: ['carts'] });
+      queryClient.fetchQuery({ queryKey: ['orders'] });
+      queryClient.fetchQuery({ queryKey: ['carts'] });
       setModalVisible(false);
       router.back();
     },

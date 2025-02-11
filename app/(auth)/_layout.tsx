@@ -5,6 +5,7 @@ import { useAppSlice } from '@/slices';
 import Header from '@/components/common/Header';
 import { DataPersistKeys, useDataPersist } from '@/hooks';
 import { IUserData } from '@/utils/interface';
+import { loadImages } from '@/theme';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -16,6 +17,7 @@ const AuthLayout = () => {
   useEffect(() => {
     async function preload() {
       try {
+        await Promise.all([loadImages()]);
         const token = await getToken();
         // Check if user is logged in or token exists
         if (token) {

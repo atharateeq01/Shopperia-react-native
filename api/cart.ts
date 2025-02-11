@@ -18,8 +18,8 @@ export const fetchAllCart = async (): Promise<any> => {
   try {
     const response = await apiClient.get(`${API_URL}/cart/user`);
     return response.data.data[0];
-  } catch (error: any) {
-    throw error.response?.data || { message: 'An error occurred while fetching the user.' };
+  } catch {
+    return [];
   }
 };
 
@@ -27,7 +27,7 @@ export const fetchCartById = async (cartId: string) => {
   try {
     const response = await apiClient.get(`${API_URL}/cart/cart/${cartId}`);
     return response.data.data;
-  } catch (error: any) {
-    throw error.response?.data || { message: 'An error occurred while fetching the user.' };
+  } catch {
+    return {};
   }
 };

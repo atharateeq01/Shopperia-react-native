@@ -83,7 +83,6 @@ export const Order = () => {
           renderItem={OrderList}
           contentContainerStyle={{ paddingBottom: 16 }}
         />
-
       )}
 
       {/* Order details modal */}

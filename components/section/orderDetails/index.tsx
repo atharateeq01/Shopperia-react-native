@@ -57,6 +57,8 @@ export const OrderDetailsModal: React.FC<IOrderDetailsModalProps> = ({
     useNativeDriver: true,
   });
 
+  const statusColor = getStatusColor(selectedOrder?.orderStatus ?? 'Processing');
+
   const onHandlerStateChange = (event: any) => {
     if (event.nativeEvent.oldState === 4) {
       if (event.nativeEvent.translationY > 50) {
@@ -85,7 +87,9 @@ export const OrderDetailsModal: React.FC<IOrderDetailsModalProps> = ({
             {selectedOrder && (
               <ScrollView showsVerticalScrollIndicator={false}>
                 <TouchableOpacity onPress={closeModal} className="absolute right-4 top-4 z-10">
-                  <XIcon size={24} color="#6B7280" />
+                  <Text>
+                    <XIcon size={24} color="#6B7280" />
+                  </Text>
                 </TouchableOpacity>
                 <View className="items-center mb-6 pb-4">
                   <Text className="text-3xl font-bold text-gray-800 mb-2">
@@ -94,8 +98,7 @@ export const OrderDetailsModal: React.FC<IOrderDetailsModalProps> = ({
                   <Text className="text-sm text-gray-600 mb-3">
                     {formatDate(selectedOrder.createdAt)}
                   </Text>
-                  <View
-                    className={`px-4 py-2 rounded-full ${getStatusColor(selectedOrder.orderStatus)}`}>
+                  <View className={['px-4 py-2 rounded-full', statusColor].join(' ')}>
                     <Text className="text-sm font-bold text-white">
                       {selectedOrder.orderStatus}
                     </Text>
@@ -118,15 +121,15 @@ export const OrderDetailsModal: React.FC<IOrderDetailsModalProps> = ({
                       </Text>
                       <View className="flex-row justify-between">
                         <Text className="text-base text-gray-800 font-semibold">
-                          ${item.itemAmount.toFixed(2)}
+                          {`$${item.productPrice.toFixed(2)}`}
                         </Text>
-                        <Text className="text-base text-gray-800">Qty: {item.itemAmount}</Text>
+                        <Text className="text-base text-gray-800">{`Qty: ${item.itemAmount}`}</Text>
                       </View>
-                      {item.discountApplied && (
-                        <Text className="text-sm text-red-500 mt-1">
-                          -${item.discountApplied.toFixed(2)} discount
-                        </Text>
-                      )}
+                      <Text className="text-sm text-red-500 mt-1">
+                        {item.discountApplied
+                          ? `-$${item.discountApplied.toFixed(2)} discount`
+                          : ''}
+                      </Text>
                     </View>
                   </TouchableOpacity>
                 ))}
