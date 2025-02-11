@@ -1,18 +1,13 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-const API_URL = 'http://localhost:5000/api/auth';
+import { API_URL } from '@/utils/constant';
+import moment from 'moment';
 
 export const loginUser = async (credentials: { email: string; password: string }) => {
   try {
-    const response = await axios.post(`${API_URL}/login`, credentials, { withCredentials: true });
-    // if (response.data.success) {
-    //   const token = response.data.data;
-    //   const expirationTime = Date.now() + 360000; // 1 hour from now (3600000 ms)
-
-    //   // Store both the token and expiration time
-    //   await AsyncStorage.setItem('token', token);
-    //   await AsyncStorage.setItem('tokenExpiration', expirationTime.toString());
-    // }
+    const response = await axios.post(`${API_URL}/auth/login`, credentials, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error: any) {
     throw error.response?.data || { message: 'An error occurred during login.' };
@@ -26,7 +21,9 @@ export const getToken = async () => {
     const expirationTime = await AsyncStorage.getItem('tokenExpiration');
 
     if (token && expirationTime) {
-      if (Date.now() < parseInt(expirationTime)) {
+      // Check if the current time is before the expiration time
+      const isExpired = moment().isBefore(moment(expirationTime));
+      if (isExpired) {
         return token; // Token is still valid
       } else {
         await AsyncStorage.removeItem('token');

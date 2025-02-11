@@ -1,36 +1,40 @@
 {
   "expo": {
-    "name": "react-native-boilerplate",
-    "slug": "react-native-boilerplate",
+    "name": "Shopperia",
+    "slug": "Shopperia",
     "version": "3.0.0",
     "owner": "wataru",
     "newArchEnabled": true,
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "orientation": "portrait",
-    "icon": "./assets/images/logo-lg.png",
+    "icon": "./assets/images/logo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "backgroundColor": "#ffffff",
+      "backgroundColor": "#f5f5f5", 
       "dark": {
         "backgroundColor": "#101212"
       },
-      "image": "./assets/images/logo-lg.png",
-      "resizeMode": "contain"
+      "image": "./assets/images/logo-lg.png", 
+      "resizeMode": "cover", 
+      "fade": true  
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.wataru.react-native-boilerplate"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo-sm.png",
+        "foregroundImage": "./assets/images/logo-lg.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/images/logo-sm.png"
+      "favicon": "./assets/images/logo-lg.png"
     },
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    }
+    "scheme": "myapp"
   }
 }

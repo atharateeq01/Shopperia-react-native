@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, View, ActivityIndicator, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, View, ActivityIndicator } from 'react-native';
 import { ReactNode } from 'react';
 
 interface ButtonProps {
@@ -12,7 +12,7 @@ interface ButtonProps {
   isLoading?: boolean;
 }
 
-const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   onPress,
   buttonText,
   isDisabled = false,
@@ -24,78 +24,31 @@ const Button: React.FC<ButtonProps> = ({
   const getButtonStyles = () => {
     switch (variant) {
       case 'primary':
-        return styles.primaryButton;
+        return 'bg-blue-500 text-white';
       case 'secondary':
-        return styles.secondaryButton;
+        return 'bg-gray-200 text-gray-700';
       case 'clear':
-        return styles.clearButton;
+        return 'bg-transparent text-blue-500';
       default:
-        return styles.primaryButton;
+        return 'bg-blue-500 text-white';
     }
   };
 
-  const disabledStyles = isDisabled || isLoading ? styles.disabled : {};
+  const baseButtonStyles = `rounded-md py-3 px-4 flex-row items-center justify-center font-bold`;
+  const disabledStyles = isDisabled || isLoading ? 'opacity-50' : '';
 
   return (
     <TouchableOpacity
       onPress={onPress}
       disabled={isDisabled || isLoading}
-      style={[styles.button, getButtonStyles(), disabledStyles]}>
-      {iconLeft && !isLoading && <View style={styles.iconLeft}>{iconLeft}</View>}
+      className={`${baseButtonStyles} ${getButtonStyles()} ${disabledStyles}`}>
+      {iconLeft && !isLoading && <View className="mr-2">{iconLeft}</View>}
       {isLoading ? (
         <ActivityIndicator size="small" color="white" />
       ) : (
-        <Text
-          style={[
-            styles.buttonText,
-            getButtonStyles() === styles.clearButton && styles.clearButtonText,
-          ]}>
-          {buttonText}
-        </Text>
+        <Text className={`text-center ${getButtonStyles().split(' ')[1]}`}>{buttonText}</Text>
       )}
-      {iconRight && !isLoading && <View style={styles.iconRight}>{iconRight}</View>}
+      {iconRight && !isLoading && <View className="ml-2">{iconRight}</View>}
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: 'bold',
-  },
-  primaryButton: {
-    backgroundColor: '#3b82f6', // blue-500
-    color: 'white',
-  },
-  secondaryButton: {
-    backgroundColor: '#e5e7eb', // gray-200
-    color: '#374151', // gray-700
-  },
-  clearButton: {
-    backgroundColor: 'transparent',
-    color: '#3b82f6', // blue-500
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: 'white',
-  },
-  clearButtonText: {
-    color: '#3b82f6', // blue-500
-  },
-  disabled: {
-    opacity: 0.5,
-  },
-  iconLeft: {
-    marginRight: 8,
-  },
-  iconRight: {
-    marginLeft: 8,
-  },
-});
-
-export default Button;

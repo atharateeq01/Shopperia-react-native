@@ -1,11 +1,11 @@
 import React, { useState, ForwardedRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 // Define the props type for the InputField
 interface InputFieldProps {
   label: string;
-  type: 'text' | 'password' | 'email' | 'number';
+  type: 'text' | 'password' | 'email' | 'number' | 'phonenumber';
   placeholder: string;
   isDisabled?: boolean;
   error?: string;
@@ -22,25 +22,37 @@ const InputFieldComponent = React.forwardRef<TextInput, InputFieldProps>(
     const [showPassword, setShowPassword] = useState(type !== 'password');
 
     return (
-      <View style={styles.container}>
-        <Text style={styles.label}>{label}</Text>
-        <View style={styles.inputWrapper}>
+      <View className="mb-4">
+        <Text className="text-gray-500">{label}</Text>
+        <View className="relative mt-2">
           <TextInput
             ref={ref} // Pass ref to the TextInput
             placeholder={placeholder}
             secureTextEntry={type === 'password' && !showPassword}
             editable={!isDisabled}
-            style={[styles.input, error && styles.errorInput, isDisabled && styles.disabledInput]}
+            placeholderClassName={'p-3'}
+            className={`border ${error ? 'border-red-500' : 'border-gray-300'} rounded-md p-3 ${isDisabled ? 'bg-gray-100' : ''}`}
             value={value}
+            keyboardType={
+              type === 'email'
+                ? 'email-address'
+                : type === 'number'
+                  ? 'numeric'
+                  : type === 'phonenumber'
+                    ? 'phone-pad'
+                    : 'default'
+            }
             onChangeText={onChange}
           />
           {type === 'password' && (
-            <TouchableOpacity style={styles.eyeIcon} onPress={() => setShowPassword(!showPassword)}>
+            <TouchableOpacity
+              className="absolute right-3 top-3"
+              onPress={() => setShowPassword(!showPassword)}>
               <Ionicons name={showPassword ? 'eye-off' : 'eye'} size={20} color="gray" />
             </TouchableOpacity>
           )}
         </View>
-        {error && <Text style={styles.errorText}>{error}</Text>}
+        {error && <Text className="text-red-500 text-sm mt-1">{error}</Text>}
       </View>
     );
   },
@@ -50,42 +62,3 @@ const InputFieldComponent = React.forwardRef<TextInput, InputFieldProps>(
 InputFieldComponent.displayName = 'InputField';
 
 export const InputField = InputFieldComponent;
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-  },
-  label: {
-    color: '#6B7280', // gray-500
-    fontSize: 14,
-    marginBottom: 8,
-  },
-  inputWrapper: {
-    position: 'relative',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: '#D1D5DB', // gray-300
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 16,
-    color: '#374151', // gray-700
-  },
-  errorInput: {
-    borderColor: '#EF4444', // red-500
-  },
-  disabledInput: {
-    backgroundColor: '#F3F4F6', // gray-100
-  },
-  eyeIcon: {
-    position: 'absolute',
-    right: 12,
-    top: 12,
-  },
-  errorText: {
-    color: '#EF4444', // red-500
-    fontSize: 12,
-    marginTop: 4,
-  },
-});

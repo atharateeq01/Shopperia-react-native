@@ -1,10 +1,12 @@
-import { getUserInfo, loginUser } from '@/api';
-import { useAppSlice } from '@/slices';
-import { showToast } from '@/utils/toast';
-import { useMutation } from '@tanstack/react-query';
-import { DataPersistKeys, useDataPersist } from './useDataPersist';
+import moment from 'moment';
 import { router } from 'expo-router';
+import { useMutation } from '@tanstack/react-query';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { showToast } from '@/utils/toast';
+import { getUserInfo, loginUser } from '@/api';
+import { useAppSlice } from '@/slices/app.slice';
+import { DataPersistKeys, useDataPersist } from '@/hooks/useDataPersist';
 
 export const useLoginUser = () => {
   const { dispatch, setUser, setLoggedIn } = useAppSlice();
@@ -14,10 +16,10 @@ export const useLoginUser = () => {
     onSuccess: async data => {
       if (data.success) {
         const token = data.data;
-        const expirationTime = Date.now() + 3600000;
+        const expirationTime = moment().add(1, 'hour').toISOString();
         // Store both the token and expiration time
         await AsyncStorage.setItem('token', token);
-        await AsyncStorage.setItem('tokenExpiration', expirationTime.toString());
+        await AsyncStorage.setItem('tokenExpiration', expirationTime);
       }
       const response = await getUserInfo();
       if (response.success) {
@@ -31,6 +33,8 @@ export const useLoginUser = () => {
       }
     },
     onError: error => {
+      console.log(error);
+
       showToast('error', 'Opps!', error.message);
     },
   });

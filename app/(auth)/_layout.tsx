@@ -1,21 +1,29 @@
+import React, { useEffect, useState } from 'react';
+import { SplashScreen, Stack, router } from 'expo-router';
 import { getToken } from '@/api';
-import { useAppSlice } from '@/slices';
-import { router, SplashScreen, Stack } from 'expo-router';
-import { useEffect, useState } from 'react';
+import { useAppSlice } from '@/slices/app.slice';
+import Header from '@/components/common/Header';
+import { DataPersistKeys, useDataPersist } from '@/hooks';
+import { IUserData } from '@/utils/interface';
+import { loadImages } from '@/theme/images';
 
 SplashScreen.preventAutoHideAsync();
 
 const AuthLayout = () => {
-  const { loggedIn } = useAppSlice();
+  const { dispatch, setUser, setLoggedIn } = useAppSlice();
+  const { getPersistData } = useDataPersist();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function preload() {
       try {
+        await Promise.all([loadImages()]);
         const token = await getToken();
         // Check if user is logged in or token exists
-        if (loggedIn || token) {
-          // Redirect to main if logged in or token is found
+        if (token) {
+          const user: IUserData = await getPersistData(DataPersistKeys.USER);
+          dispatch(setUser(user));
+          dispatch(setLoggedIn(!!user));
           router.push('/(main)');
         } else {
           // Otherwise, stay in the auth flow
@@ -23,31 +31,46 @@ const AuthLayout = () => {
           SplashScreen.hideAsync();
         }
       } catch (error) {
-        // Optionally, handle error (e.g., token fetch failed)
         console.error(error);
       }
     }
     preload();
-  }, [loggedIn]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (loading) {
     SplashScreen.hideAsync();
-    // You can return null or a loading spinner if needed
     return null;
   }
+
   // If logged out, render auth stack
   return (
-    <Stack>
+    <Stack
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: '#bbdefb',
+        },
+        headerTitleAlign: 'center',
+        headerBackTitle: 'Go Back',
+        headerBlurEffect: 'extraLight',
+      }}>
       <Stack.Screen
-        name="index"
+        name="login/index"
         options={{
-          headerTitle: 'Login',
+          headerTitle: () => <Header title="Login" />,
         }}
       />
       <Stack.Screen
-        name="authScreen/signUpSection/index"
+        name="signUp/index"
         options={{
-          headerTitle: 'Sign up',
+          headerTitle: () => <Header title="Sign up" />,
+        }}
+      />
+      <Stack.Screen
+        name="sessionExpired/index"
+        options={{
+          headerShown: false,
+          headerTitle: () => <Header title="Sign up" />,
         }}
       />
     </Stack>
