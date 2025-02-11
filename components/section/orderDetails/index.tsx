@@ -57,8 +57,6 @@ export const OrderDetailsModal: React.FC<IOrderDetailsModalProps> = ({
     useNativeDriver: true,
   });
 
-  const statusColor = getStatusColor(selectedOrder?.orderStatus ?? 'Processing');
-
   const onHandlerStateChange = (event: any) => {
     if (event.nativeEvent.oldState === 4) {
       if (event.nativeEvent.translationY > 50) {
@@ -98,8 +96,9 @@ export const OrderDetailsModal: React.FC<IOrderDetailsModalProps> = ({
                   <Text className="text-sm text-gray-600 mb-3">
                     {formatDate(selectedOrder.createdAt)}
                   </Text>
-                  <View className={['px-4 py-2 rounded-full', statusColor].join(' ')}>
-                    <Text className="text-sm font-bold text-white">
+                  <View className={`px-4 py-2 rounded-full border border-gray-400`}>
+                    <Text
+                      className={`text-lg font-bold ${getStatusColor(selectedOrder.orderStatus)}`}>
                       {selectedOrder.orderStatus}
                     </Text>
                   </View>

@@ -38,13 +38,13 @@ export const capitalizeName = (name: string) => {
 };
 
 const statusColors: Record<OrderStatus, string> = {
-  Delivered: 'bg-green-500',
-  Processing: 'bg-blue-500',
-  Cancelled: 'bg-red-500',
+  Delivered: 'text-green-500',
+  Processing: 'text-blue-500',
+  Cancelled: 'text-red-500',
 };
 
 export const getStatusColor = (status: OrderStatus) => {
-  return statusColors[status] || 'bg-gray-500';
+  return statusColors[status] || 'text-gray-500';
 };
 
 export const formatDate = (date: Date) => {

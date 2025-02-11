@@ -36,8 +36,11 @@ export const RenderOrderItem: React.FC<RenderOrderItemProps> = ({ item, setSelec
 
           <View className="flex-row justify-between items-center mb-3">
             <Text className="text-xl font-bold text-gray-800">${item.orderAmount.toFixed(2)}</Text>
-            <View className={`px-3 py-1 rounded-full ${getStatusColor(item.orderStatus)}`}>
-              <Text className="text-xs font-bold text-white">{item.orderStatus}</Text>
+
+            <View className={`px-4 py-2 rounded-full border border-gray-400`}>
+              <Text className={`text-md font-bold ${getStatusColor(item.orderStatus)}`}>
+                {item.orderStatus}
+              </Text>
             </View>
           </View>
 

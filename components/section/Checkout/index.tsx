@@ -24,7 +24,7 @@ export const Checkout = ({ cartItems }: CheckoutProps) => {
       queryClient.fetchQuery({ queryKey: ['orders'] });
       queryClient.fetchQuery({ queryKey: ['carts'] });
       setModalVisible(false);
-      router.back();
+      router.push('(main)/order');
     },
   });
 

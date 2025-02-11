@@ -86,7 +86,7 @@ export const OrderFilterModal: React.FC<IOrderFilterModalProps> = ({
           </View>
 
           <Text className="text-lg font-semibold text-gray-700 my-4">Order Status</Text>
-          <View className="flex-row justify-between mb-4">
+          <View className="flex-row justify-between mb-4 pb-5 border-b border-gray-300">
             {['Delivered', 'Processing', 'Cancelled'].map(status => (
               <FilterOption
                 key={status}
@@ -103,7 +103,7 @@ export const OrderFilterModal: React.FC<IOrderFilterModalProps> = ({
           </View>
 
           <Text className="text-lg font-semibold text-gray-700 my-4">Order Date</Text>
-          <View className="flex-row justify-between mb-6">
+          <View className="flex-row justify-between mb-6  pb-5 border-b border-gray-300">
             {['A day ago', 'A week ago', 'A month ago'].map(date => (
               <FilterOption
                 key={date}
@@ -119,7 +119,7 @@ export const OrderFilterModal: React.FC<IOrderFilterModalProps> = ({
             ))}
           </View>
 
-          <View className="flex-row justify-between items-center">
+          <View className="flex-row justify-between items-center mb-5">
             <Button buttonText="Apply Filters" onPress={handleApplyFilters} />
             <Button buttonText="Clear Filters" onPress={handleClearFilters} variant="secondary" />
           </View>
