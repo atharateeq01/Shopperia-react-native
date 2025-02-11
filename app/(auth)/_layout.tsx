@@ -4,7 +4,7 @@ import { getToken } from '@/api';
 import { useAppSlice } from '@/slices';
 import Header from '@/components/common/Header';
 import { DataPersistKeys, useDataPersist } from '@/hooks';
-import { IUserData } from '@/utils/helper';
+import { IUserData } from '@/utils/interface';
 
 SplashScreen.preventAutoHideAsync();
 

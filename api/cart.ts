@@ -1,4 +1,4 @@
-import { ICreateCart } from '@/utils/helper';
+import { ICreateCart } from '@/utils/interface';
 import apiClient from './middleware';
 import { API_URL } from '@/utils/constant';
 

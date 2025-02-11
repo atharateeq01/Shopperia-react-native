@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { View, TextInput, FlatList, Text, TouchableOpacity } from 'react-native';
 
-import type { IProduct } from '@/utils/helper';
+import type { IProduct } from '@/utils/interface';
 import { ProductCard } from '@/components/section/productCard';
 
 interface ProductListProps {

@@ -7,7 +7,7 @@ import { View, SafeAreaView, Text, ScrollView, Image } from 'react-native';
 
 import { createUser } from '@/api';
 import { showToast } from '@/utils/toast';
-import { IUserData } from '@/utils/helper';
+import { IUserData } from '@/utils/interface';
 import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/components/common/Button';
 import { InputField } from '@/components/common/InputField';

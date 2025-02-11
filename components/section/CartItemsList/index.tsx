@@ -1,5 +1,5 @@
 import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
-import { ICart } from '@/utils/helper';
+import { ICart } from '@/utils/interface';
 import { colors } from '@/theme';
 import { Trash2, Minus, Plus } from 'lucide-react-native';
 

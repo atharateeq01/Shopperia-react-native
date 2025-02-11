@@ -5,7 +5,7 @@ import { View, Text, Image, TouchableOpacity, ActivityIndicator, Animated } from
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProductById } from '@/api';
-import type { IProduct } from '@/utils/helper';
+import type { IProduct } from '@/utils/interface';
 import { colors } from '@/theme';
 import { Ionicons } from '@expo/vector-icons';
 import { AddToCartModal } from '@/components/section/addToCartModal';

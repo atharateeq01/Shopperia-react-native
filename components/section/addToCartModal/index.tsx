@@ -3,7 +3,7 @@
 import type React from 'react';
 import { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Modal, Animated, Easing, Image } from 'react-native';
-import type { IProduct } from '@/utils/helper';
+import type { IProduct } from '@/utils/interface';
 import { Button } from '@/components/common/Button';
 import { Ionicons } from '@expo/vector-icons';
 import { useMutation } from '@tanstack/react-query';

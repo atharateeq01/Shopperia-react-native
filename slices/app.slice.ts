@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { State, Dispatch } from '@/utils/store';
-import { IUserData } from '@/utils/helper';
+import { IUserData } from '@/utils/interface';
 
 export interface AppState {
   checked: boolean;

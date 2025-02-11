@@ -7,7 +7,7 @@ import { ShoppingBanners } from '@/components/section/banner';
 import { ProductCard } from '@/components/section/productCard';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAllCategories, fetchAllProducts } from '@/api';
-import { ICategory } from '@/utils/helper';
+import { ICategory } from '@/utils/interface';
 import { Button } from '@/components/common/Button';
 import { Ionicons } from '@expo/vector-icons';
 

@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
-import type { IProduct } from '@/utils/helper';
+import type { IProduct } from '@/utils/interface';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { AddToCartModal } from '../addToCartModal';

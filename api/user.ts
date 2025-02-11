@@ -1,6 +1,6 @@
 import axios from 'axios';
 import apiClient from './middleware';
-import { IUser, IUserData } from '@/utils/helper';
+import { IUser, IUserData } from '@/utils/interface';
 import { API_URL } from '@/utils/constant';
 
 export const createUser = async (userData: IUserData): Promise<any> => {

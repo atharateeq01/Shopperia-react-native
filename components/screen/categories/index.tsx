@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ICategory } from '@/utils/helper';
+import { ICategory } from '@/utils/interface';
 import { useQuery } from '@tanstack/react-query';
 import { fetchAllCategories } from '@/api';
 import { colors } from '@/theme';

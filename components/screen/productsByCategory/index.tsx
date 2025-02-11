@@ -4,7 +4,7 @@ import { useLocalSearchParams } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
 import { fetchProductsByCategoryId } from '@/api';
 import { ProductList } from '@/components/section/productList';
-import { IProduct } from '@/utils/helper';
+import { IProduct } from '@/utils/interface';
 import { colors } from '@/theme';
 
 export const ProductsByCategory = () => {

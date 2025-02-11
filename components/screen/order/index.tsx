@@ -16,6 +16,7 @@ import { IFilterState, type IOrder } from '@/utils/interface';
 import { OrderFilterModal } from '@/components/section/orderFilter';
 import { OrderDetailsModal } from '@/components/section/orderDetails';
 import { RenderOrderItem } from '@/components/section/RenderOrderItem';
+import { EmptyCart } from '@/components/section/emptyCart';
 
 export const Order = () => {
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);
@@ -73,13 +74,17 @@ export const Order = () => {
           onChangeText={e => setFilter({ ...filter, orderName: e })}
         />
       </View>
+      {filteredOrders.length === 0 ? (
+        <EmptyCart textMessage="No order yet." isCart={false} />
+      ) : (
+        <FlatList
+          data={filteredOrders}
+          keyExtractor={item => item._id}
+          renderItem={OrderList}
+          contentContainerStyle={{ paddingBottom: 16 }}
+        />
 
-      <FlatList
-        data={filteredOrders}
-        keyExtractor={item => item._id}
-        renderItem={OrderList}
-        contentContainerStyle={{ paddingBottom: 16 }}
-      />
+      )}
 
       {/* Order details modal */}
       <OrderDetailsModal selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder} />

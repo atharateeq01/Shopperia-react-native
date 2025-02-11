@@ -33,6 +33,8 @@ export const useLoginUser = () => {
       }
     },
     onError: error => {
+      console.log(error);
+
       showToast('error', 'Opps!', error.message);
     },
   });

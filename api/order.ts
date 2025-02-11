@@ -1,4 +1,4 @@
-import { ICreateOrder } from '@/utils/helper';
+import { ICreateOrder } from '@/utils/interface';
 import apiClient from './middleware';
 import { API_URL } from '@/utils/constant';
 

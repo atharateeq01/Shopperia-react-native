@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, Alert } from 'react-native';
 import { useQuery, useMutation } from '@tanstack/react-query';
-import { ICart } from '@/utils/helper';
+import { ICart } from '@/utils/interface';
 import { colors } from '@/theme';
 import { fetchAllCart, createCart } from '@/api/cart';
 import { useAppSlice } from '@/slices';
@@ -27,10 +27,6 @@ export const Cart = () => {
     mutationFn: createCart,
     onSuccess: () => refetch(),
   });
-
-  useEffect(() => {
-    setCartItems([]);
-  }, []);
 
   useEffect(() => {
     setCartItems(!isError && cartData?.cartItems ? cartData?.cartItems : []);
@@ -79,7 +75,7 @@ export const Cart = () => {
       </View>
 
       {cartItems.length === 0 ? (
-        <EmptyCart />
+        <EmptyCart textMessage="Cart is empty" isCart={true} />
       ) : (
         <CartItemsList
           cartItems={cartItems}
