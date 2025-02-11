@@ -1,6 +1,6 @@
 import type React from 'react';
-import { useState } from 'react';
 import { router } from 'expo-router';
+import { Fragment, useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 
@@ -23,7 +23,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     : product.price;
 
   return (
-    <>
+    <Fragment>
       <TouchableOpacity
         activeOpacity={0.9}
         onPress={() => router.push(`(main)/home/product-details/${product._id}`)}
@@ -86,6 +86,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
       />
-    </>
+    </Fragment>
   );
 };

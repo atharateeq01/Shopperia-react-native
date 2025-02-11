@@ -12,7 +12,7 @@ function Router() {
   return (
     <Fragment>
       <Slot />
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
     </Fragment>
   );
 }
