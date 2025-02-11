@@ -1,13 +1,14 @@
-import { images } from '@/theme';
 import React, { useRef, useState } from 'react';
 import { View, Text, Image, TouchableOpacity, FlatList, Dimensions } from 'react-native';
 
+import { images } from '@/theme/images';
+
 const { width } = Dimensions.get('window');
-const ITEM_WIDTH = width * 0.95; // Adjust item width
-const SIDE_ITEM_WIDTH = (width - ITEM_WIDTH) / 2; // Ensure side items are visible
+const ITEM_WIDTH = width * 0.95;
+const SIDE_ITEM_WIDTH = (width - ITEM_WIDTH) / 2;
 
 export const ShoppingBanners = () => {
-  const [currentIndex, setCurrentIndex] = useState(0); // Start from the first item
+  const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
   const bannerData = [

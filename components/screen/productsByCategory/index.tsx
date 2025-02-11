@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ActivityIndicator } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
 import { useQuery } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
+import { useLocalSearchParams } from 'expo-router';
+import { View, Text, Image, ActivityIndicator } from 'react-native';
+
+import { IProduct } from '@/utils/interface';
 import { fetchProductsByCategoryId } from '@/api';
 import { ProductList } from '@/components/section/productList';
-import { IProduct } from '@/utils/interface';
-import { colors } from '@/theme';
 
 export const ProductsByCategory = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -31,7 +31,7 @@ export const ProductsByCategory = () => {
   if (isLoading) {
     return (
       <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color={colors.blue} />
+        <ActivityIndicator size="large" color={'#007bff'} />
         <Text>Loading...</Text>
       </View>
     );
@@ -39,7 +39,7 @@ export const ProductsByCategory = () => {
 
   return (
     <View className="flex-1 p-4 bg-white">
-      {products && products.length === 0 ? (
+      {products && products.length === 0 && !isLoading ? (
         <View className="flex-1 justify-center items-center">
           <Image source={placeholderImage} className="w-36 h-36 mb-4" />
           <Text className="text-lg text-gray-600">No products for this category</Text>

@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 import { View, Text, ActivityIndicator, Alert } from 'react-native';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { ICart } from '@/utils/interface';
-import { colors } from '@/theme';
+import { useAppSlice } from '@/slices/app.slice';
 import { fetchAllCart, createCart } from '@/api/cart';
-import { useAppSlice } from '@/slices';
+import { Checkout } from '@/components/section/Checkout';
 import { EmptyCart } from '@/components/section/emptyCart';
 import { CartItemsList } from '@/components/section/CartItemsList';
-import { Checkout } from '@/components/section/Checkout';
 
 export const Cart = () => {
   const [cartItems, setCartItems] = useState<ICart[]>([]);
@@ -61,7 +61,7 @@ export const Cart = () => {
   if (isLoading) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
-        <ActivityIndicator size="large" color={colors.blue} />
+        <ActivityIndicator size="large" color={'#007bff'} />
         <Text>Loading...</Text>
       </View>
     );

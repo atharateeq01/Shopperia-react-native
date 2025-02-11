@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, Image } from 'react-native';
-import { formatDate, getStatusColor } from '@/utils/helper';
-import { type IOrder } from '@/utils/interface';
-import { PackageIcon, ChevronRightIcon } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { View, Text, TouchableOpacity, Image } from 'react-native';
+import { PackageIcon, ChevronRightIcon } from 'lucide-react-native';
+
+import { type IOrder } from '@/utils/interface';
+import { formatDate, getStatusColor } from '@/utils/helper';
 
 interface RenderOrderItemProps {
   item: IOrder;

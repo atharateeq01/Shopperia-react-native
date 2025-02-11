@@ -1,12 +1,11 @@
-'use client';
-
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Modal, Animated, Keyboard } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import type { IFilterState, OrderDate, OrderStatus } from '@/utils/interface';
-import { Button } from '@/components/common/Button';
 import { TextInput } from 'react-native-gesture-handler';
+import { View, Text, TouchableOpacity, Modal, Animated, Keyboard } from 'react-native';
+
+import { Button } from '@/components/common/Button';
 import { FilterOption } from '@/components/common/FilterOption';
+import type { IFilterState, OrderDate, OrderStatus } from '@/utils/interface';
 
 interface IOrderFilterModalProps {
   filter: IFilterState;

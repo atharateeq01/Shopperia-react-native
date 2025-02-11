@@ -3,9 +3,9 @@ import { router } from 'expo-router';
 import { useMutation } from '@tanstack/react-query';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { useAppSlice } from '@/slices';
 import { showToast } from '@/utils/toast';
 import { getUserInfo, loginUser } from '@/api';
+import { useAppSlice } from '@/slices/app.slice';
 import { DataPersistKeys, useDataPersist } from '@/hooks/useDataPersist';
 
 export const useLoginUser = () => {

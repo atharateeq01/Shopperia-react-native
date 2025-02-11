@@ -1,8 +1,9 @@
-import { useDataPersist } from '@/hooks';
-import { useAppSlice } from '@/slices';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { router } from 'expo-router';
 import { useEffect } from 'react';
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import { useDataPersist } from '@/hooks';
+import { useAppSlice } from '@/slices/app.slice';
 
 export const Logout = () => {
   const { dispatch, reset, setLoggedIn } = useAppSlice();

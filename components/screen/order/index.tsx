@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import { TextInput } from 'react-native-gesture-handler';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
 
-import { fetchAllOrder } from '@/api/order';
 import {
   getDateThreshold,
   matchesStatus,
@@ -12,11 +11,12 @@ import {
   matchesAmount,
   matchesOrderName,
 } from '@/utils/helper';
+import { fetchAllOrder } from '@/api/order';
+import { EmptyCart } from '@/components/section/emptyCart';
 import { IFilterState, type IOrder } from '@/utils/interface';
 import { OrderFilterModal } from '@/components/section/orderFilter';
 import { OrderDetailsModal } from '@/components/section/orderDetails';
 import { RenderOrderItem } from '@/components/section/RenderOrderItem';
-import { EmptyCart } from '@/components/section/emptyCart';
 
 export const Order = () => {
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);

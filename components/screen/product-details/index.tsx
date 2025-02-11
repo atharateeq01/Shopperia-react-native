@@ -1,13 +1,11 @@
-'use client';
-
 import { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ActivityIndicator, Animated } from 'react-native';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, Animated } from 'react-native';
+
 import { fetchProductById } from '@/api';
 import type { IProduct } from '@/utils/interface';
-import { colors } from '@/theme';
-import { Ionicons } from '@expo/vector-icons';
 import { AddToCartModal } from '@/components/section/addToCartModal';
 
 export const ProductDetails = () => {
@@ -29,7 +27,7 @@ export const ProductDetails = () => {
   if (isProductLoading) {
     return (
       <View className="flex-1 justify-center items-center bg-white">
-        <ActivityIndicator size="large" color={colors.blue} />
+        <ActivityIndicator size="large" color={'#007bff'} />
         <Text className="mt-4 text-gray-600">Loading product details...</Text>
       </View>
     );
@@ -52,13 +50,13 @@ export const ProductDetails = () => {
         style={{ opacity: headerOpacity }}
         className="absolute top-0 left-0 right-0 z-10 bg-white py-4 px-5 flex-row items-center justify-between">
         <TouchableOpacity onPress={() => router.back()}>
-          <Ionicons name="arrow-back" size={24} color={colors.blue} />
+          <Ionicons name="arrow-back" size={24} color={'#007bff'} />
         </TouchableOpacity>
         <Text numberOfLines={1} className="text-lg font-semibold flex-1 mx-4">
           {product.productName}
         </Text>
         <TouchableOpacity>
-          <Ionicons name="heart-outline" size={24} color={colors.blue} />
+          <Ionicons name="heart-outline" size={24} color={'#007bff'} />
         </TouchableOpacity>
       </Animated.View>
 
@@ -90,7 +88,7 @@ export const ProductDetails = () => {
               )}
             </View>
             <View className="flex-row items-center">
-              <Ionicons name="star" size={18} color={colors.yellow} />
+              <Ionicons name="star" size={18} color={'#FFEA00'} />
               <Text className="ml-1 text-gray-600">4.5 (120 reviews)</Text>
             </View>
           </View>

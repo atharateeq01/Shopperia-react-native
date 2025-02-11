@@ -1,7 +1,8 @@
-import { Button } from '@/components/common/Button';
-import { Ionicons } from '@expo/vector-icons';
 import { router, Stack } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { View, Text, Image } from 'react-native';
+
+import { Button } from '@/components/common/Button';
 
 export const NotFound = () => {
   return (

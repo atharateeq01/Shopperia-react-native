@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
-import { ICategory } from '@/utils/interface';
 import { useQuery } from '@tanstack/react-query';
+import { View, Text, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+
 import { fetchAllCategories } from '@/api';
-import { colors } from '@/theme';
+import { ICategory } from '@/utils/interface';
 
 export const Categories = () => {
   const router = useRouter();
@@ -26,7 +26,7 @@ export const Categories = () => {
   return (
     <View className="flex-1 bg-white px-4 py-4">
       {categoriesLoading ? (
-        <ActivityIndicator size="large" color={colors.lightDarkPurple} />
+        <ActivityIndicator size="large" color={'#f7f7fb'} />
       ) : categoriesError ? (
         <Text className="text-center text-red-500">Failed to load categories</Text>
       ) : (

@@ -1,7 +1,7 @@
-import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
-import { ICart } from '@/utils/interface';
-import { colors } from '@/theme';
 import { Trash2, Minus, Plus } from 'lucide-react-native';
+import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native';
+
+import { ICart } from '@/utils/interface';
 
 interface CartItemsListProps {
   cartItems: ICart[];
@@ -45,13 +45,13 @@ export const CartItemsList = ({
               <TouchableOpacity
                 onPress={() => handleQuantityChange(item.productId._id, item.itemAmount - 1)}
                 className="p-2">
-                <Minus size={20} color={colors.blue} />
+                <Minus size={20} color={'#007bff'} />
               </TouchableOpacity>
               <Text className="mx-4 text-lg font-bold">{item.itemAmount}</Text>
               <TouchableOpacity
                 onPress={() => handleQuantityChange(item.productId._id, item.itemAmount + 1)}
                 className="p-2">
-                <Plus size={20} color={colors.blue} />
+                <Plus size={20} color={'#007bff'} />
               </TouchableOpacity>
             </View>
             <TouchableOpacity

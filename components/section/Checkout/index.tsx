@@ -1,10 +1,11 @@
-import { View, Text, Alert, Modal } from 'react-native';
 import { useState } from 'react';
+import { router } from 'expo-router';
+import { View, Text, Alert, Modal } from 'react-native';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Button } from '@/components/common/Button';
+
 import { createOrder } from '@/api/order';
 import { ICart } from '@/utils/interface';
-import { router } from 'expo-router';
+import { Button } from '@/components/common/Button';
 import { InputField } from '@/components/common/InputField';
 
 interface CheckoutProps {

@@ -1,8 +1,9 @@
-import { Button } from '@/components/common/Button';
-import { images } from '@/theme';
-import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { View, Text, Image } from 'react-native';
+
+import { images } from '@/theme/images';
+import { Button } from '@/components/common/Button';
 
 interface IEmptyPage {
   textMessage: string;

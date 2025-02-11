@@ -1,6 +1,7 @@
 import React from 'react';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import { useMutation } from '@tanstack/react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Controller, useForm } from 'react-hook-form';
 import { View, SafeAreaView, Text, ScrollView, Image } from 'react-native';
@@ -8,7 +9,6 @@ import { View, SafeAreaView, Text, ScrollView, Image } from 'react-native';
 import { createUser } from '@/api';
 import { showToast } from '@/utils/toast';
 import { IUserData } from '@/utils/interface';
-import { useMutation } from '@tanstack/react-query';
 import { Button } from '@/components/common/Button';
 import { InputField } from '@/components/common/InputField';
 import SignUpSchema from '@/components/screen/auth/signUp/validation';

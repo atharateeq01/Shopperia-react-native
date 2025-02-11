@@ -1,15 +1,15 @@
 import React from 'react';
-import { Text, View, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { useRouter } from 'expo-router';
-import { colors } from '@/theme';
-import { useAppSlice } from '@/slices';
+import { Ionicons } from '@expo/vector-icons';
+import { useQuery } from '@tanstack/react-query';
+import { Text, View, FlatList, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
+
+import { ICategory } from '@/utils/interface';
+import { useAppSlice } from '@/slices/app.slice';
+import { Button } from '@/components/common/Button';
+import { fetchAllCategories, fetchAllProducts } from '@/api';
 import { ShoppingBanners } from '@/components/section/banner';
 import { ProductCard } from '@/components/section/productCard';
-import { useQuery } from '@tanstack/react-query';
-import { fetchAllCategories, fetchAllProducts } from '@/api';
-import { ICategory } from '@/utils/interface';
-import { Button } from '@/components/common/Button';
-import { Ionicons } from '@expo/vector-icons';
 
 export const Home = () => {
   const router = useRouter();
@@ -64,7 +64,7 @@ export const Home = () => {
         </TouchableOpacity>
       </View>
       {categoriesLoading ? (
-        <ActivityIndicator size="large" color={colors.lightDarkPurple} />
+        <ActivityIndicator size="large" color={'#f7f7fb'} />
       ) : categoriesError ? (
         <Text>Failed to load categories</Text>
       ) : (
@@ -96,7 +96,7 @@ export const Home = () => {
         </TouchableOpacity>
       </View>
       {productsLoading ? (
-        <ActivityIndicator size="large" color={colors.lightDarkPurple} />
+        <ActivityIndicator size="large" color={'#f7f7fb'} />
       ) : productsError ? (
         <Text>Failed to load categories</Text>
       ) : (

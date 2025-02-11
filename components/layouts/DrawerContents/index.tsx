@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { View, Text } from 'react-native';
 import {
   DrawerContentScrollView,
@@ -6,9 +6,10 @@ import {
   DrawerItem,
   DrawerContentComponentProps,
 } from '@react-navigation/drawer';
-import { router } from 'expo-router';
-import { useAppSlice } from '@/slices';
+import { Ionicons } from '@expo/vector-icons';
+
 import { getInitials } from '@/utils/helper';
+import { useAppSlice } from '@/slices/app.slice';
 
 export const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const { user } = useAppSlice();

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { SplashScreen, Stack, router } from 'expo-router';
 import { getToken } from '@/api';
-import { useAppSlice } from '@/slices';
+import { useAppSlice } from '@/slices/app.slice';
 import Header from '@/components/common/Header';
 import { DataPersistKeys, useDataPersist } from '@/hooks';
 import { IUserData } from '@/utils/interface';
-import { loadImages } from '@/theme';
+import { loadImages } from '@/theme/images';
 
 SplashScreen.preventAutoHideAsync();
 

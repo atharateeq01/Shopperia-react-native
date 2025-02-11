@@ -1,12 +1,11 @@
-'use client';
-
 import React, { useRef } from 'react';
+import { XIcon } from 'lucide-react-native';
+import { ScrollView, PanGestureHandler } from 'react-native-gesture-handler';
 import { View, Text, Modal, Image, TouchableOpacity, Animated } from 'react-native';
-import { formatDate, getStatusColor } from '@/utils/helper';
+
 import { type IOrder } from '@/utils/interface';
 import { Button } from '@/components/common/Button';
-import { ScrollView, PanGestureHandler } from 'react-native-gesture-handler';
-import { XIcon } from 'lucide-react-native';
+import { formatDate, getStatusColor } from '@/utils/helper';
 
 interface IOrderDetailsModalProps {
   selectedOrder: IOrder | null;
