@@ -7,6 +7,7 @@ import { createOrder } from '@/api/order';
 import { ICart } from '@/utils/interface';
 import { Button } from '@/components/common/Button';
 import { InputField } from '@/components/common/InputField';
+import { showToast } from '@/utils/toast';
 
 interface CheckoutProps {
   cartItems: ICart[];
@@ -22,10 +23,11 @@ export const Checkout = ({ cartItems }: CheckoutProps) => {
   const { mutate: makeOrder } = useMutation({
     mutationFn: createOrder,
     onSuccess: () => {
-      queryClient.fetchQuery({ queryKey: ['orders'] });
+      queryClient.resetQueries({ queryKey: ['orders'] });
       queryClient.fetchQuery({ queryKey: ['carts'] });
       setModalVisible(false);
-      router.push('(main)/order');
+      showToast('success', 'Congrats', 'Order has been placed successfully');
+      router.back();
     },
   });
 
@@ -65,49 +67,55 @@ export const Checkout = ({ cartItems }: CheckoutProps) => {
   };
 
   return (
-    <View className="mt-4 border-t border-gray-200 pt-4 pb-6">
-      <View className="flex-row justify-between mb-2">
-        <Text className="text-lg text-gray-500">Subtotal</Text>
-        <Text className="text-lg font-bold text-black">${calculateTotal().toFixed(2)}</Text>
-      </View>
-      <View className="flex-row justify-between mb-4">
-        <Text className="text-lg text-gray-500">Discount</Text>
-        <Text className="text-lg font-bold text-green-500">-${calculateDiscount().toFixed(2)}</Text>
-      </View>
-      <View className="flex-row justify-between mb-4">
-        <Text className="text-xl font-bold text-black">Total</Text>
-        <Text className="text-xl font-bold text-black">${calculateFinalTotal().toFixed(2)}</Text>
-      </View>
+    <View className="border-t border-gray-200">
+      <View className="mt-4 pt-4 pb-6">
+        <View className="flex-row justify-between mb-2">
+          <Text className="text-lg text-gray-500">Subtotal</Text>
+          <Text className="text-lg font-bold text-black">${calculateTotal().toFixed(2)}</Text>
+        </View>
+        <View className="flex-row justify-between mb-4">
+          <Text className="text-lg text-gray-500">Discount</Text>
+          <Text className="text-lg font-bold text-green-500">
+            -${calculateDiscount().toFixed(2)}
+          </Text>
+        </View>
+        <View className="flex-row justify-between mb-4">
+          <Text className="text-xl font-bold text-black">Total</Text>
+          <Text className="text-xl font-bold text-black">${calculateFinalTotal().toFixed(2)}</Text>
+        </View>
 
-      {cartItems.length > 0 && <Button onPress={handleProceed} buttonText="Proceed to Checkout" />}
+        {cartItems.length > 0 && (
+          <Button onPress={handleProceed} buttonText="Proceed to Checkout" />
+        )}
 
-      {/* Modal for Address & Phone Input */}
-      <Modal visible={modalVisible} transparent animationType="none">
-        <View className="flex-1 justify-center items-center bg-black/50">
-          <View className="bg-white p-6 rounded-lg w-4/5">
-            <Text className="text-lg font-bold mb-4">Enter Delivery Details</Text>
-            <InputField
-              label={'Delivery Address'}
-              type={'text'}
-              placeholder={'Enter your address'}
-              value={address}
-              onChange={e => setAddress(e)}
-            />
-            <InputField
-              label={'Phone Number'}
-              type={'phonenumber'}
-              placeholder={'Enter your  phone number'}
-              value={phoneNumber}
-              onChange={e => setPhoneNumber(e)}
-            />
+        {/* Modal for Address & Phone Input */}
+        <Modal visible={modalVisible} transparent animationType="none">
+          <View className="flex-1 justify-center items-center bg-black/50">
+            <View className="bg-white p-6 rounded-lg w-4/5">
+              <Text className="text-lg font-bold mb-4">Enter Delivery Details</Text>
+              <InputField
+                label={'Delivery Address'}
+                type={'text'}
+                placeholder={'Enter your address'}
+                value={address}
+                onChange={e => setAddress(e)}
+              />
+              <InputField
+                label={'Phone Number'}
+                type={'phonenumber'}
+                placeholder={'Enter your  phone number'}
+                value={phoneNumber}
+                onChange={e => setPhoneNumber(e)}
+              />
 
-            <View className="flex-row justify-between mt-4">
-              <Button onPress={() => setModalVisible(false)} buttonText="Cancel" />
-              <Button onPress={handleOrder} buttonText="Confirm Order" />
+              <View className="flex-row justify-between mt-4">
+                <Button onPress={() => setModalVisible(false)} buttonText="Cancel" />
+                <Button onPress={handleOrder} buttonText="Confirm Order" />
+              </View>
             </View>
           </View>
-        </View>
-      </Modal>
+        </Modal>
+      </View>
     </View>
   );
 };

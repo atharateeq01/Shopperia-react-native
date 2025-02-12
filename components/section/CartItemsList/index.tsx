@@ -40,7 +40,7 @@ export const CartItemsList = ({
             </View>
           </View>
 
-          <View className="flex-row items-center justify-between mt-4">
+          <View className="flex-row items-center justify-between mt-4 bg-gray-300">
             <View className="flex-row items-center bg-white rounded-full overflow-hidden">
               <TouchableOpacity
                 onPress={() => handleQuantityChange(item.productId._id, item.itemAmount - 1)}

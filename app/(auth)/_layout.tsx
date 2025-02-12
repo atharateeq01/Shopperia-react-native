@@ -45,15 +45,7 @@ const AuthLayout = () => {
 
   // If logged out, render auth stack
   return (
-    <Stack
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: '#bbdefb',
-        },
-        headerTitleAlign: 'center',
-        headerBackTitle: 'Go Back',
-        headerBlurEffect: 'extraLight',
-      }}>
+    <Stack>
       <Stack.Screen
         name="login/index"
         options={{

@@ -13,17 +13,11 @@ export default function DrawerWithTabsLayout() {
           backgroundColor: '#ffffff',
           width: 280,
         },
-        headerStyle: {
-          backgroundColor: '#bbdefb',
-        },
         drawerLabelStyle: {
           fontSize: 16,
           fontWeight: '500',
           color: '#333',
         },
-        drawerActiveBackgroundColor: '#e3f2fd',
-        drawerActiveTintColor: '#1976d2',
-        drawerInactiveTintColor: '#555',
       }}>
       <Drawer.Screen
         name="index"

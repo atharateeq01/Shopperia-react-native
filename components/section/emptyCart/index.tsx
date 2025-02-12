@@ -12,9 +12,9 @@ interface IEmptyPage {
 
 export const EmptyCart = ({ textMessage, isCart = true }: IEmptyPage) => {
   return (
-    <View className="flex-1 justify-center items-center bg-lightGrayPurple px-4">
+    <View className="flex-1 justify-center items-center bg-lightGrayPurple pb-4">
       {/* Placeholder Image */}
-      <Image source={isCart ? images.emptyCart : images.emptyOrder} className={'w-30 h-30'} />
+      <Image source={isCart ? images.emptyCart : images.emptyOrder} className={'w-full h-5/6'} />
 
       {/* Title */}
       <Text className="text-3xl font-bold text-center mb-4">{textMessage}</Text>

@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useQuery } from '@tanstack/react-query';
 import { TextInput } from 'react-native-gesture-handler';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import {
   getDateThreshold,
@@ -28,9 +28,10 @@ export const Order = () => {
     orderName: '',
   });
 
-  const { data: orderData } = useQuery({
+  const { data: orderData, isLoading: isLoadingOrderData } = useQuery({
     queryKey: ['orders'],
     queryFn: fetchAllOrder,
+    refetchOnMount: true,
   });
 
   const filteredOrders = useMemo(() => {
@@ -52,6 +53,15 @@ export const Order = () => {
   const OrderList = ({ item }: { item: IOrder }) => {
     return <RenderOrderItem item={item} setSelectedOrder={setSelectedOrder} />;
   };
+
+  if (isLoadingOrderData) {
+    return (
+      <View className="flex-1 justify-center items-center bg-white">
+        <ActivityIndicator size="large" color={'#007bff'} />
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 bg-gray-100 p-4">
