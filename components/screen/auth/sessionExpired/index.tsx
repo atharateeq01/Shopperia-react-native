@@ -2,7 +2,7 @@ import { router, Stack } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { View, Text, Image } from 'react-native';
 
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/common/button';
 
 export const SessionExpired = () => {
   return (

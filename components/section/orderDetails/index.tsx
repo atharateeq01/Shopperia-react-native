@@ -4,7 +4,7 @@ import { ScrollView, PanGestureHandler } from 'react-native-gesture-handler';
 import { View, Text, Modal, Image, TouchableOpacity, Animated } from 'react-native';
 
 import { type IOrder } from '@/utils/interface';
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/common/button';
 import { formatDate, getStatusColor } from '@/utils/helper';
 
 interface IOrderDetailsModalProps {

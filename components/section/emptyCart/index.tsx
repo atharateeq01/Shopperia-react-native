@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { View, Text, Image } from 'react-native';
 
 import { images } from '@/theme/images';
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/common/button';
 
 interface IEmptyPage {
   textMessage: string;

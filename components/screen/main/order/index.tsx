@@ -16,7 +16,7 @@ import { EmptyCart } from '@/components/section/emptyCart';
 import { IFilterState, type IOrder } from '@/utils/interface';
 import { OrderFilterModal } from '@/components/section/orderFilter';
 import { OrderDetailsModal } from '@/components/section/orderDetails';
-import { RenderOrderItem } from '@/components/section/RenderOrderItem';
+import { RenderOrderItem } from '@/components/section/renderOrderItem';
 
 export const Order = () => {
   const [selectedOrder, setSelectedOrder] = useState<IOrder | null>(null);

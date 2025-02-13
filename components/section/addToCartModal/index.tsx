@@ -6,7 +6,7 @@ import { View, Text, TouchableOpacity, Modal, Animated, Easing, Image } from 're
 
 import { createCart } from '@/api/cart';
 import type { IProduct } from '@/utils/interface';
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/common/button';
 
 interface IAddToCartModalProps {
   product: IProduct;

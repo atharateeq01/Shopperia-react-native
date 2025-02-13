@@ -1,7 +1,7 @@
 import React from 'react';
 import { Stack } from 'expo-router';
 
-import Header from '@/components/common/Header';
+import Header from '@/components/common/header';
 
 const AuthLayout = () => {
   return (

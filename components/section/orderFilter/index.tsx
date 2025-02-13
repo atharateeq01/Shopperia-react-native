@@ -3,8 +3,8 @@ import { Ionicons } from '@expo/vector-icons';
 import { TextInput } from 'react-native-gesture-handler';
 import { View, Text, TouchableOpacity, Modal, Animated, Keyboard } from 'react-native';
 
-import { Button } from '@/components/common/Button';
-import { FilterOption } from '@/components/common/FilterOption';
+import { Button } from '@/components/common/button';
+import { FilterOption } from '@/components/common/filterOption';
 import type { IFilterState, OrderDate, OrderStatus } from '@/utils/interface';
 
 interface IOrderFilterModalProps {

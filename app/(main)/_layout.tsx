@@ -1,7 +1,7 @@
 import { Drawer } from 'expo-router/drawer';
 import { Ionicons } from '@expo/vector-icons';
 
-import { CustomDrawerContent } from '@/components/layouts/DrawerContents';
+import { CustomDrawerContent } from '@/components/layouts/drawerContents';
 
 export default function DrawerWithTabsLayout() {
   return (

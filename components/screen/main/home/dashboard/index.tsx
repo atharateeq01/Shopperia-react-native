@@ -6,7 +6,7 @@ import { Text, View, FlatList, TouchableOpacity, Image, ActivityIndicator } from
 
 import { ICategory } from '@/utils/interface';
 import { useAppSlice } from '@/slices/app.slice';
-import { Button } from '@/components/common/Button';
+import { Button } from '@/components/common/button';
 import { fetchAllCategories, fetchAllProducts } from '@/api';
 import { ShoppingBanners } from '@/components/section/banner';
 import { ProductCard } from '@/components/section/productCard';

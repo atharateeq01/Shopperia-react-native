@@ -5,8 +5,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { createOrder } from '@/api/order';
 import { ICart } from '@/utils/interface';
-import { Button } from '@/components/common/Button';
-import { InputField } from '@/components/common/InputField';
+import { Button } from '@/components/common/button';
+import { InputField } from '@/components/common/inputField';
 import { showToast } from '@/utils/toast';
 
 interface CheckoutProps {

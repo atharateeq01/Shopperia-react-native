@@ -6,8 +6,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { View, SafeAreaView, Text, ScrollView, Image, TouchableOpacity } from 'react-native';
 
 import { useLoginUser } from '@/hooks/useLogin';
-import { Button } from '@/components/common/Button';
-import { InputField } from '@/components/common/InputField';
+import { Button } from '@/components/common/button';
+import { InputField } from '@/components/common/inputField';
 import LoginSchema from '@/components/screen/auth/login/validation';
 
 export const Login = () => {

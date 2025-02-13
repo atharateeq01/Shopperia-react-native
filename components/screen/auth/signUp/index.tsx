@@ -9,8 +9,8 @@ import { View, SafeAreaView, Text, ScrollView, Image } from 'react-native';
 import { createUser } from '@/api';
 import { showToast } from '@/utils/toast';
 import { IUserData } from '@/utils/interface';
-import { Button } from '@/components/common/Button';
-import { InputField } from '@/components/common/InputField';
+import { Button } from '@/components/common/button';
+import { InputField } from '@/components/common/inputField';
 import SignUpSchema from '@/components/screen/auth/signUp/validation';
 
 export const SignUp = () => {

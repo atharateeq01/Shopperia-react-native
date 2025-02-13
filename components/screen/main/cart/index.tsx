@@ -5,9 +5,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { ICart } from '@/utils/interface';
 import { useAppSlice } from '@/slices/app.slice';
 import { fetchAllCart, createCart } from '@/api/cart';
-import { Checkout } from '@/components/section/Checkout';
+import { Checkout } from '@/components/section/checkout';
 import { EmptyCart } from '@/components/section/emptyCart';
-import { CartItemsList } from '@/components/section/CartItemsList';
+import { CartItemsList } from '@/components/section/cartItemsList';
 
 export const Cart = () => {
   const [cartItems, setCartItems] = useState<ICart[]>([]);
