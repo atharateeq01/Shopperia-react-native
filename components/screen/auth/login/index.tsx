@@ -17,6 +17,10 @@ export const Login = () => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(LoginSchema),
+    // defaultValues: {
+    //   email: 'Athar@gmail.com',
+    //   password: 'Password@1',
+    // },
   });
 
   const { mutate } = useLoginUser();

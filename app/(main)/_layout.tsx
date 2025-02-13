@@ -20,13 +20,7 @@ export default function DrawerWithTabsLayout() {
         },
       }}>
       <Drawer.Screen
-        name="index"
-        options={{
-          drawerItemStyle: { display: 'none' },
-        }}
-      />
-      <Drawer.Screen
-        name="home"
+        name="(home)"
         options={{
           headerTitle: 'Shopperia',
           drawerLabel: 'Home',
@@ -34,7 +28,7 @@ export default function DrawerWithTabsLayout() {
         }}
       />
       <Drawer.Screen
-        name="cart/index"
+        name="cart"
         options={{
           headerTitle: 'Cart',
           drawerLabel: 'Cart',
@@ -42,17 +36,11 @@ export default function DrawerWithTabsLayout() {
         }}
       />
       <Drawer.Screen
-        name="order/index"
+        name="order"
         options={{
           headerTitle: 'Order',
           drawerLabel: 'Order',
           drawerIcon: ({ color }) => <Ionicons name="bag-check-outline" size={24} color={color} />,
-        }}
-      />
-      <Drawer.Screen
-        name="logout/index"
-        options={{
-          drawerItemStyle: { display: 'none' },
         }}
       />
     </Drawer>

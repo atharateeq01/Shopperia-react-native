@@ -1,68 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { SplashScreen, Stack, router } from 'expo-router';
-import { getToken } from '@/api';
-import { useAppSlice } from '@/slices/app.slice';
-import Header from '@/components/common/Header';
-import { DataPersistKeys, useDataPersist } from '@/hooks';
-import { IUserData } from '@/utils/interface';
-import { loadImages } from '@/theme/images';
+import React from 'react';
+import { Stack } from 'expo-router';
 
-SplashScreen.preventAutoHideAsync();
+import Header from '@/components/common/Header';
 
 const AuthLayout = () => {
-  const { dispatch, setUser, setLoggedIn } = useAppSlice();
-  const { getPersistData } = useDataPersist();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function preload() {
-      try {
-        await Promise.all([loadImages()]);
-        const token = await getToken();
-        // Check if user is logged in or token exists
-        if (token) {
-          const user: IUserData = await getPersistData(DataPersistKeys.USER);
-          dispatch(setUser(user));
-          dispatch(setLoggedIn(!!user));
-          router.push('/(main)');
-        } else {
-          // Otherwise, stay in the auth flow
-          setLoading(false);
-          SplashScreen.hideAsync();
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    preload();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  if (loading) {
-    SplashScreen.hideAsync();
-    return null;
-  }
-
-  // If logged out, render auth stack
   return (
     <Stack>
       <Stack.Screen
-        name="login/index"
+        name="login"
         options={{
           headerTitle: () => <Header title="Login" />,
         }}
       />
       <Stack.Screen
-        name="signUp/index"
+        name="signUp"
         options={{
           headerTitle: () => <Header title="Sign up" />,
         }}
       />
       <Stack.Screen
-        name="sessionExpired/index"
+        name="sessionExpired"
         options={{
           headerShown: false,
-          headerTitle: () => <Header title="Sign up" />,
+          headerTitle: () => <Header title="Session expired" />,
         }}
       />
     </Stack>

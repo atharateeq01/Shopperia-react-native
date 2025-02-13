@@ -11,7 +11,7 @@ import { fetchAllCategories, fetchAllProducts } from '@/api';
 import { ShoppingBanners } from '@/components/section/banner';
 import { ProductCard } from '@/components/section/productCard';
 
-export const Home = () => {
+export const Dashboard = () => {
   const router = useRouter();
   const { user } = useAppSlice();
 
@@ -45,7 +45,7 @@ export const Home = () => {
 
         <View>
           <Button
-            onPress={() => router.push('(main)/cart')}
+            onPress={() => router.replace('(main)/cart')}
             buttonText="Cart"
             iconLeft={<Ionicons name="cart" color={'#fff'} size={20} />}
           />
@@ -59,7 +59,7 @@ export const Home = () => {
         <Text className="text-xl font-bold">Top Categories</Text>
         <TouchableOpacity
           disabled={!!categoriesLoading}
-          onPress={() => router.push('(main)/home/categories')}>
+          onPress={() => router.push('(main)/(home)/categories')}>
           <Text className="text-blue-500">See All</Text>
         </TouchableOpacity>
       </View>
@@ -77,7 +77,12 @@ export const Home = () => {
             renderItem={({ item }) => (
               <TouchableOpacity
                 className="px-3 items-center"
-                onPress={() => router.push(`(main)/home/productsByCategory/${item._id}`)}>
+                onPress={() =>
+                  router.push({
+                    pathname: '(main)/(home)/productsByCategory',
+                    params: { id: item._id },
+                  })
+                }>
                 <Image source={{ uri: item.categoryImage }} className="w-12 h-12 rounded-full" />
                 <Text className="mt-2 text-sm text-black">{item.categoryName}</Text>
               </TouchableOpacity>
@@ -91,7 +96,7 @@ export const Home = () => {
         <Text className="text-xl font-bold">Featured Products</Text>
         <TouchableOpacity
           disabled={!!productsLoading}
-          onPress={() => router.push('(main)/home/products')}>
+          onPress={() => router.push('(main)/(home)/products')}>
           <Text className="text-blue-500">View All</Text>
         </TouchableOpacity>
       </View>

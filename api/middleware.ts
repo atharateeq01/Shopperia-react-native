@@ -17,7 +17,7 @@ apiClient.interceptors.request.use(
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       } else {
-        router.push('/(auth)/sessionExpired');
+        router.push('(auth)/sessionExpired');
       }
     } catch (error) {
       console.error('Error retrieving token:', error);

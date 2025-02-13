@@ -29,12 +29,10 @@ export const useLoginUser = () => {
 
         // Persist user data
         await setPersistData(DataPersistKeys.USER, response.data);
-        router.push('/(main)');
+        router.push('(main)/(home)/dashboard');
       }
     },
     onError: error => {
-      console.log(error);
-
       showToast('error', 'Opps!', error.message);
     },
   });

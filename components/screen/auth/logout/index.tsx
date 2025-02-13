@@ -15,7 +15,7 @@ export const Logout = () => {
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('tokenExpiration');
       setLoggedIn(false);
-      router.push('/(auth)');
+      router.replace('(auth)/login');
     };
 
     handleLogout();

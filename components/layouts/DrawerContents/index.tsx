@@ -41,7 +41,7 @@ export const CustomDrawerContent = (props: DrawerContentComponentProps) => {
           label="Logout"
           labelStyle={{ fontSize: 16, fontWeight: '500', color: '#333' }}
           icon={({ color }) => <Ionicons name="log-out-outline" size={24} color={color} />}
-          onPress={() => router.push('(main)/logout')}
+          onPress={() => router.replace('(auth)/logout')}
         />
       </View>
     </DrawerContentScrollView>

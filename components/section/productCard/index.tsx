@@ -26,7 +26,9 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <Fragment>
       <TouchableOpacity
         activeOpacity={0.9}
-        onPress={() => router.push(`(main)/home/product-details/${product._id}`)}
+        onPress={() =>
+          router.push({ pathname: '(main)/(home)/product-details', params: { id: product._id } })
+        }
         className="bg-white rounded-xl p-3 mb-4 w-[48%] shadow-md shadow-black/10">
         {/* Discount Badge */}
         {product.discount && product.discount > 0 && (

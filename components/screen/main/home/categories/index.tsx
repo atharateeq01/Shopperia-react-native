@@ -20,7 +20,7 @@ export const Categories = () => {
   });
 
   const handleCategoryPress = (categoryId: string) => {
-    router.push(`(main)/home/productsByCategory/${categoryId}`);
+    router.push({ pathname: '(main)/(home)/productsByCategory', params: { id: categoryId } });
   };
 
   return (
