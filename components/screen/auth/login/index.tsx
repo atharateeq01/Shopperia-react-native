@@ -17,20 +17,12 @@ export const Login = () => {
     handleSubmit,
   } = useForm({
     resolver: yupResolver(LoginSchema),
-    // defaultValues: {
-    //   email: 'Athar@gmail.com',
-    //   password: 'Password@1',
-    // },
   });
 
   const { mutate } = useLoginUser();
 
   const onSubmit = async (data: { email: string; password: string }) => {
-    try {
-      mutate(data);
-    } catch (error) {
-      console.log(error);
-    }
+    mutate(data);
   };
 
   return (

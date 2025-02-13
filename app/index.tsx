@@ -16,8 +16,6 @@ export default function Layout() {
         await Promise.all([loadImages()]);
         const token = await getToken();
         // Check if user is logged in or token exists
-        console.log('token');
-
         if (token) {
           const user: IUserData = await getPersistData(DataPersistKeys.USER);
           dispatch(setUser(user));
