@@ -14,18 +14,21 @@ export const ProductList: React.FC<ProductListProps> = ({ products }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null);
   const [showDiscounted, setShowDiscounted] = useState(false);
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     loadFilteredProducts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products, showDiscounted, sortOrder, searchQuery]); // Only products and showDiscounted are needed here
+  }, [products, showDiscounted, sortOrder, searchQuery, page]); // Only products and showDiscounted are needed here
 
   const loadFilteredProducts = () => {
-    const filteredProducts = products.filter(
-      product =>
-        product.productName.toLowerCase().includes(searchQuery.toLowerCase()) &&
-        (showDiscounted ? product.discount && product.discount > 0 : true),
-    );
+    const filteredProducts = products
+      .slice(0, page * 10)
+      .filter(
+        product =>
+          product.productName.toLowerCase().includes(searchQuery.toLowerCase()) &&
+          (showDiscounted ? product.discount && product.discount > 0 : true),
+      );
 
     if (sortOrder) {
       filteredProducts.sort((a, b) =>
@@ -33,6 +36,12 @@ export const ProductList: React.FC<ProductListProps> = ({ products }) => {
       );
     }
     setProductsData(filteredProducts);
+  };
+
+  const loadMoreProducts = () => {
+    if (page * 10 < products.length) {
+      setPage(prevPage => prevPage + 1);
+    }
   };
 
   const handleSortChange = (order: 'asc' | 'desc') => {
@@ -68,43 +77,43 @@ export const ProductList: React.FC<ProductListProps> = ({ products }) => {
           <Text className={`ml-2 ${showDiscounted ? 'text-white' : 'text-black'}`}>Discounted</Text>
         </TouchableOpacity>
 
-        <View className="flex-row">
-          <TouchableOpacity
-            onPress={() => handleSortChange('asc')}
-            className={`p-2 rounded-l-full ${sortOrder === 'asc' ? 'bg-blue-500' : 'bg-gray-300'}`}>
-            <View className="flex-1 flex-row">
-              <Text className={`${sortOrder === 'asc' ? 'text-white' : 'text-black'}`}>
-                High to Low
-              </Text>
-              <Ionicons name="arrow-up" size={20} color={sortOrder === 'asc' ? 'white' : 'black'} />
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => handleSortChange('desc')}
-            className={`p-2 rounded-r-full ${sortOrder === 'desc' ? 'bg-blue-500' : 'bg-gray-300'}`}>
-            <View className="flex-1 flex-row">
-              <Text className={`${sortOrder === 'desc' ? 'text-white' : 'text-black'}`}>
-                High to Low
-              </Text>
-              <Ionicons
-                name="arrow-down"
-                size={20}
-                color={sortOrder === 'desc' ? 'white' : 'black'}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          onPress={() => handleSortChange('asc')}
+          className={`p-2 rounded-full ${sortOrder === 'asc' ? 'bg-blue-500' : 'bg-gray-300'}`}>
+          <View className="flex-1 flex-row">
+            <Text className={`${sortOrder === 'asc' ? 'text-white' : 'text-black'}`}>
+              High to Low
+            </Text>
+            <Ionicons name="arrow-up" size={20} color={sortOrder === 'asc' ? 'white' : 'black'} />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleSortChange('desc')}
+          className={`p-2 rounded-full ${sortOrder === 'desc' ? 'bg-blue-500' : 'bg-gray-300'}`}>
+          <View className="flex-1 flex-row">
+            <Text className={`${sortOrder === 'desc' ? 'text-white' : 'text-black'}`}>
+              High to Low
+            </Text>
+            <Ionicons
+              name="arrow-down"
+              size={20}
+              color={sortOrder === 'desc' ? 'white' : 'black'}
+            />
+          </View>
+        </TouchableOpacity>
       </View>
 
       {/* Product List */}
       <FlatList
+        numColumns={2}
         data={productsData}
         renderItem={renderProduct}
+        onEndReachedThreshold={0.5}
+        onEndReached={loadMoreProducts}
         keyExtractor={item => item._id}
-        contentContainerStyle={{ paddingBottom: 20 }}
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: 'space-between' }}
         showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 20 }}
+        columnWrapperStyle={{ justifyContent: 'space-between' }}
       />
     </View>
   );

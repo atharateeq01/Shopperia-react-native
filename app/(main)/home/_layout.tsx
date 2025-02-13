@@ -1,45 +1,14 @@
-import Header from '@/components/common/Header';
 import { Stack } from 'expo-router';
 
 export default function HomeStackLayout() {
   return (
-    <Stack>
-      <Stack.Screen
-        name="index"
-        options={{
-          headerTitle: () => <Header title="Dashboard" />,
-        }}
-      />
-      <Stack.Screen
-        name="products/index"
-        options={{
-          headerTitle: () => <Header title="Products" />,
-        }}
-      />
-      <Stack.Screen
-        name="product-details/[id]"
-        options={{
-          headerTitle: () => <Header title="Product details" />,
-        }}
-      />
-      <Stack.Screen
-        name="categories/index"
-        options={{
-          headerTitle: () => <Header title="Categories" />,
-        }}
-      />
-      <Stack.Screen
-        name="productsByCategory/[id]"
-        options={{
-          headerTitle: () => <Header title="Products" />,
-        }}
-      />
-      <Stack.Screen
-        name="cart/index"
-        options={{
-          headerTitle: () => <Header title="Cart" />,
-        }}
-      />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="index" />
+      <Stack.Screen name="products/index" />
+      <Stack.Screen name="home/index" />
+      <Stack.Screen name="product-details/[id]" />
+      <Stack.Screen name="categories/index" />
+      <Stack.Screen name="productsByCategory/[id]" />
     </Stack>
   );
 }

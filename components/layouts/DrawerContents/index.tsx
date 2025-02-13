@@ -17,7 +17,7 @@ export const CustomDrawerContent = (props: DrawerContentComponentProps) => {
     <DrawerContentScrollView
       {...props}
       contentContainerStyle={{ flex: 1, backgroundColor: '#bbdefb' }}>
-      <View className="flex-row justify-around items-center py-5 mb-2 border-b border-gray-500">
+      <View className="flex-row justify-around items-center py-5 mb-2 border-b border-gray-500 rounded-r-lg">
         {/* Circle with initials */}
         <View className="w-20 h-20 bg-blue-400 rounded-full justify-center items-center mb-3">
           <Text className="text-white text-3xl font-bold">

@@ -28,7 +28,7 @@ export default function DrawerWithTabsLayout() {
       <Drawer.Screen
         name="home"
         options={{
-          headerShown: false,
+          headerTitle: 'Shopperia',
           drawerLabel: 'Home',
           drawerIcon: ({ color }) => <Ionicons name="home-outline" size={24} color={color} />,
         }}

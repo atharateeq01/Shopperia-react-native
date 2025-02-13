@@ -1,3 +1,5 @@
-import { Home } from '@/components/screen/home';
+import { Redirect } from 'expo-router';
 
-export default Home;
+export default function Layout() {
+  return <Redirect href="(main)/home/home" />;
+}

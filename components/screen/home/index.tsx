@@ -45,7 +45,7 @@ export const Home = () => {
 
         <View>
           <Button
-            onPress={() => router.push('(main)/home/cart')}
+            onPress={() => router.push('(main)/cart')}
             buttonText="Cart"
             iconLeft={<Ionicons name="cart" color={'#fff'} size={20} />}
           />
